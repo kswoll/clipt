@@ -1,114 +1,95 @@
-﻿// <copyright file="KeyboardHook.cs" company="PlanGrid, Inc.">
-//     Copyright (c) 2017 PlanGrid, Inc. All rights reserved.
-// </copyright>
-
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
+using Clipt.WinApi;
 
 namespace Clipt.KeyboardHooks
 {
-    public sealed class KeyboardHook
+    public class KeyboardHook
     {
-        private readonly KeyboardWindow window = new KeyboardWindow();
+        private static readonly LowLevelKeyboardProc proc = HookCallback;
 
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
+        private static IntPtr hookId;
+
+        public static void Hook()
         {
-            window.RegisterHotKey(modifiers, key, handler);
+            hookId = SetHook(proc);
         }
 
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
+        public static void Unhook()
         {
-            window.RegisterHotKey(modifiers, key, () =>
+            UnhookWindowsHookEx(hookId);
+        }
+
+        private static IntPtr SetHook(LowLevelKeyboardProc proc)
+        {
+            using (var curProcess = Process.GetCurrentProcess())
+            using (var curModule = curProcess.MainModule)
             {
-                handler();
-                return true;
-            });
+                return SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            }
         }
 
         /// <summary>
-        /// Represents the window that is used internally to get the messages.
+        /// Return 1 to eat the keystroke.
         /// </summary>
-        private class KeyboardWindow : Window
+        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            [DllImport("User32.dll", SetLastError = true)]
-            private static extern bool RegisterHotKey(
-                [In] IntPtr hWnd,
-                [In] int id,
-                [In] uint fsModifiers,
-                [In] uint vk);
-
-            [DllImport("User32.dll", SetLastError = true)]
-            private static extern bool UnregisterHotKey(
-                [In] IntPtr hWnd,
-                [In] int id);
-
-            private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
-            private readonly WindowInteropHelper interop;
-
-            private HwndSource source;
-            private int nextHotKeyId = 9000;
-
-            public KeyboardWindow()
+            var message = (WindowMessage)wParam;
+            if (nCode >= 0/* && wParam == (IntPtr)WindowMessage.WM_KEYDOWN*/)
             {
-                interop = new WindowInteropHelper(this);
-                interop.EnsureHandle();
-            }
+                var kbd = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                var vkCode = (KeyCode)kbd.vkCode;
+//                var vkCode = (KeyCode)Marshal.ReadInt32(lParam);
 
-            protected override void OnSourceInitialized(EventArgs e)
-            {
-                base.OnSourceInitialized(e);
-
-                source = HwndSource.FromHwnd(interop.Handle);
-                source.AddHook(HwndHook);
-            }
-
-            protected override void OnClosed(EventArgs e)
-            {
-                base.OnClosed(e);
-
-                source.RemoveHook(HwndHook);
-                UnregisterHotKeys();
-            }
-
-            public void RegisterHotKey(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
-            {
-                if (!RegisterHotKey(interop.Handle, nextHotKeyId, (uint)modifiers, (uint)key))
+                if (vkCode == KeyCode.A)
                 {
-                    var error = Marshal.GetLastWin32Error();
-                    throw new Exception("Unable to register hotkey");
-                }
-                else
-                {
-                    handlers[nextHotKeyId] = handler;
-                    nextHotKeyId++;
+                    SendKey.SendKeyPress(KeyCode.D);
+                    return new IntPtr(1);
                 }
             }
 
-            private void UnregisterHotKeys()
-            {
-                var helper = new WindowInteropHelper(this);
-                foreach (var id in handlers.Keys)
-                {
-                    UnregisterHotKey(helper.Handle, id);
-                }
-            }
+            return CallNextHookEx(hookId, nCode, wParam, lParam);
+        }
 
-            private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-            {
-                const int wmHotkey = 0x0312;
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-                switch (msg)
-                {
-                    case wmHotkey:
-                        var handler = handlers[wParam.ToInt32()];
-                        handled = handler();
-                        break;
-                }
-                return IntPtr.Zero;
-            }
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct KBDLLHOOKSTRUCT
+        {
+            public uint vkCode;
+            public uint scanCode;
+            public KBDLLHOOKSTRUCTFlags flags;
+            public uint time;
+            public UIntPtr dwExtraInfo;
+        }
+
+        [Flags]
+        private enum KBDLLHOOKSTRUCTFlags : uint
+        {
+            LLKHF_EXTENDED = 0x01,
+
+            /// <summary>
+            /// If this is present, it was not a keystroke that naturally occurred -- something else injected it.  If you're
+            /// doing something like remapping keys, you should probably ignore events when this flag is present.
+            /// </summary>
+            LLKHF_INJECTED = 0x10,
+
+            LLKHF_ALTDOWN = 0x20,
+            LLKHF_UP = 0x80,
         }
     }
 }

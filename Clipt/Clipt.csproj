@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,8 +57,9 @@
   <ItemGroup>
     <Compile Include="Actions\PasteAction.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="KeyboardHooks\SendKey.cs" />
     <Compile Include="KeyboardHooks\KeyboardHook.cs" />
+    <Compile Include="KeyboardHooks\SendKey.cs" />
+    <Compile Include="KeyboardHooks\HotKey.cs" />
     <Compile Include="KeyboardHooks\KeyCode.cs" />
     <Compile Include="KeyboardHooks\ModifierKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -73,6 +75,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="WinApi\HookType.cs" />
+    <Compile Include="WinApi\WindowsMessage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
