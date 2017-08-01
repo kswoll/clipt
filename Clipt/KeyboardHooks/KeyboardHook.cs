@@ -36,15 +36,26 @@ namespace Clipt.KeyboardHooks
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             var message = (WindowMessage)wParam;
-            if (nCode >= 0/* && wParam == (IntPtr)WindowMessage.WM_KEYDOWN*/)
+            if (nCode >= 0 && message == WindowMessage.WM_KEYDOWN)
             {
-                var kbd = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
-                var vkCode = (KeyCode)kbd.vkCode;
+                var keyboardData = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                var vkCode = keyboardData.vkCode;
+                var isExtended = (keyboardData.flags & KBDLLHOOKSTRUCTFlags.LLKHF_EXTENDED) != 0;
+                var isInjected = (keyboardData.flags & KBDLLHOOKSTRUCTFlags.LLKHF_INJECTED) != 0;
+                var keyData = new KeyData(vkCode, keyboardData.scanCode, isExtended, isInjected);
 //                var vkCode = (KeyCode)Marshal.ReadInt32(lParam);
 
+//                if (vkCode == KeyCode.Packet)
+                {
+                    Debug.WriteLine($"vkCode: {vkCode}, scanCode: {keyboardData.scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
+//                    KeySender.SendKeyPress(KeyCode.D);
+//                    return new IntPtr(1);
+                }
                 if (vkCode == KeyCode.A)
                 {
-                    SendKey.SendKeyPress(KeyCode.D);
+                    KeySender.SendKeyPress(KeyCode.Packet, 55356);
+                    KeySender.SendKeyPress(KeyCode.Packet, 57303);
+                    KeySender.SendKeyPress(KeyCode.Packet, 65039);
                     return new IntPtr(1);
                 }
             }
@@ -70,7 +81,7 @@ namespace Clipt.KeyboardHooks
         [StructLayout(LayoutKind.Sequential)]
         private struct KBDLLHOOKSTRUCT
         {
-            public uint vkCode;
+            public KeyCode vkCode;
             public uint scanCode;
             public KBDLLHOOKSTRUCTFlags flags;
             public uint time;
@@ -80,6 +91,14 @@ namespace Clipt.KeyboardHooks
         [Flags]
         private enum KBDLLHOOKSTRUCTFlags : uint
         {
+            /// <summary>
+            /// This will be set in the following situations:
+            /// * A key on the numpad is pressed, which is the same as the equivalent number along the top
+            ///   of your keyboard -- in this case the scan code and VK code will be the same, but this bit
+            ///   will be set for the key on the numpad.
+            /// * Use of a FN key applied to another key. This is unpredictable as it depends on the particular
+            ///   keyboard and driver.
+            /// </summary>
             LLKHF_EXTENDED = 0x01,
 
             /// <summary>

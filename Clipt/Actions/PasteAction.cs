@@ -33,9 +33,9 @@ namespace Clipt.Actions
 
             Clipboard.SetText(text);
 
-            SendKey.SendKeyDown(KeyCode.Control);
-            SendKey.SendKeyPress(KeyCode.V);
-            SendKey.SendKeyUp(KeyCode.Control);
+            KeySender.SendKeyDown(KeyCode.Control);
+            KeySender.SendKeyPress(KeyCode.V);
+            KeySender.SendKeyUp(KeyCode.Control);
         }
     }
 }
