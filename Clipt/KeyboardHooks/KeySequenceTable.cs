@@ -1,7 +1,11 @@
-﻿namespace Clipt.KeyboardHooks
+﻿using System;
+using System.Collections.Generic;
+
+namespace Clipt.KeyboardHooks
 {
-    public class KeySequenceTable
+    public class KeySequenceTable : KeySequenceBranch
     {
-        
+        public static KeySequenceTable Instance { get; } = new KeySequenceTable();
+
     }
 }

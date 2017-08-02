@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Clipt.KeyboardHooks
@@ -7,14 +8,17 @@ namespace Clipt.KeyboardHooks
     {
         public IReadOnlyList<KeyTrigger> Keys { get; }
 
-        public KeySequence(params KeyTrigger[] keys)
+        public KeySequenceSpan Start => new KeySequenceSpan(this, 0, Keys.Count);
+
+        public KeySequence(params KeyTrigger[] keys) : this((IEnumerable<KeyTrigger>)keys)
         {
-            Keys = keys.ToArray();
         }
 
         public KeySequence(IEnumerable<KeyTrigger> keys)
         {
             Keys = keys.ToArray();
+            if (Keys.Count == 0)
+                throw new ArgumentException(nameof(keys));
         }
     }
 }

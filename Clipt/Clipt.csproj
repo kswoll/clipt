@@ -57,15 +57,21 @@
   <ItemGroup>
     <Compile Include="Actions\PasteAction.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="KeyboardHooks\IKeySequenceNode.cs" />
     <Compile Include="KeyboardHooks\KeyboardHook.cs" />
     <Compile Include="KeyboardHooks\KeyData.cs" />
     <Compile Include="KeyboardHooks\KeySender.cs" />
     <Compile Include="KeyboardHooks\HotKey.cs" />
     <Compile Include="KeyboardHooks\KeyCode.cs" />
     <Compile Include="KeyboardHooks\KeySequence.cs" />
+    <Compile Include="KeyboardHooks\KeySequenceBranch.cs" />
+    <Compile Include="KeyboardHooks\KeySequenceHandler.cs" />
+    <Compile Include="KeyboardHooks\KeySequenceHandlerNode.cs" />
+    <Compile Include="KeyboardHooks\KeySequenceSpan.cs" />
     <Compile Include="KeyboardHooks\KeySequenceTable.cs" />
     <Compile Include="KeyboardHooks\KeyTrigger.cs" />
     <Compile Include="KeyboardHooks\ModifierKeys.cs" />
+    <Compile Include="KeyboardHooks\SequenceAlreadyRegisteredException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

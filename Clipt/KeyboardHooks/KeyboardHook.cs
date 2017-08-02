@@ -43,6 +43,7 @@ namespace Clipt.KeyboardHooks
                 var isExtended = (keyboardData.flags & KBDLLHOOKSTRUCTFlags.LLKHF_EXTENDED) != 0;
                 var isInjected = (keyboardData.flags & KBDLLHOOKSTRUCTFlags.LLKHF_INJECTED) != 0;
                 var keyData = new KeyData(vkCode, keyboardData.scanCode, isExtended, isInjected);
+                KeySequenceTable.Process(keyData);
 //                var vkCode = (KeyCode)Marshal.ReadInt32(lParam);
 
 //                if (vkCode == KeyCode.Packet)
