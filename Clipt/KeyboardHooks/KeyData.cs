@@ -1,4 +1,6 @@
-﻿namespace Clipt.KeyboardHooks
+﻿using Clipt.WinApi;
+
+namespace Clipt.KeyboardHooks
 {
     public struct KeyData
     {

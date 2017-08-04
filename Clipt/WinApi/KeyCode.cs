@@ -1,12 +1,12 @@
 ﻿// <copyright file="KeyCodes.cs" company="PlanGrid, Inc.">
 //     Copyright (c) 2017 PlanGrid, Inc. All rights reserved.
 // </copyright>
-namespace Clipt.KeyboardHooks
+namespace Clipt.WinApi
 {
     /// <summary>
     /// Enumeration for virtual keys.
     /// </summary>
-    public enum KeyCode : uint
+    public enum KeyCode : byte
     {
         /// <summary></summary>
         LeftButton = 0x01,

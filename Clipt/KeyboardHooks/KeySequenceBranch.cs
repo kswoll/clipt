@@ -6,6 +6,16 @@ namespace Clipt.KeyboardHooks
     {
         private readonly Dictionary<KeyTrigger, IKeySequenceNode> nodes = new Dictionary<KeyTrigger, IKeySequenceNode>();
 
+/*
+        public void Process(KeyData key)
+        {
+            if (nodes.TryGetValue(key, out var node))
+            {
+
+            }
+        }
+*/
+
         public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler)
         {
             RegisterSpan(sequence.Start, handler);

@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Clipt.Actions;
 using Clipt.KeyboardHooks;
+using Clipt.MessageHooks;
+using Clipt.WinApi;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Clipt
@@ -26,6 +28,7 @@ namespace Clipt
             var app = new App();
 
             KeyboardHook.Hook();
+            MessageHook.Hook();
             try
             {
                 app.Run();
@@ -33,6 +36,7 @@ namespace Clipt
             finally
             {
                 KeyboardHook.Unhook();
+                MessageHook.Unhook();
             }
         }
 
@@ -42,6 +46,12 @@ namespace Clipt
 
             hotKey = new HotKey();
             hotKey.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () => new PasteAction().OnPaste());
+
+/*
+            KeySequenceProcessor.RegisterSequence(
+                new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T),
+                keys => Debug.WriteLine("Success"));
+*/
 
             var logo = new BitmapImage();
             logo.BeginInit();

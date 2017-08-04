@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace Clipt.KeyboardHooks
 {
-    public class KeySequenceTable : KeySequenceBranch
+    public class KeySequenceTable
     {
-        public static KeySequenceTable Instance { get; } = new KeySequenceTable();
+/*
+        private Dictionary<ScanCode, IKeySequenceNode> nodesByScanCode = new Dictionary<uint, IKeySequenceNode>();
+        private Dictionary<KeyCode, IKeySequenceNode> nodesByKeyCode = new Dictionary<KeyCode, IKeySequenceNode>();
 
+        public bool TryGetValue()
+*/
     }
 }

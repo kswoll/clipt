@@ -1,4 +1,6 @@
-﻿namespace Clipt.KeyboardHooks
+﻿using Clipt.WinApi;
+
+namespace Clipt.KeyboardHooks
 {
     public struct KeyTrigger
     {
@@ -13,6 +15,11 @@
             ScanCode = scanCode;
             IsExtended = isExtended;
             IsInjected = isInjected;
+        }
+
+        public static implicit operator KeyTrigger(KeyCode key)
+        {
+            return new KeyTrigger(key, null, null, null);
         }
     }
 }

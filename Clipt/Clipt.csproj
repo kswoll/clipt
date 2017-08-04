@@ -62,16 +62,20 @@
     <Compile Include="KeyboardHooks\KeyData.cs" />
     <Compile Include="KeyboardHooks\KeySender.cs" />
     <Compile Include="KeyboardHooks\HotKey.cs" />
-    <Compile Include="KeyboardHooks\KeyCode.cs" />
+    <Compile Include="Utils\BitUtils.cs" />
+    <Compile Include="WinApi\KeyCode.cs" />
     <Compile Include="KeyboardHooks\KeySequence.cs" />
     <Compile Include="KeyboardHooks\KeySequenceBranch.cs" />
     <Compile Include="KeyboardHooks\KeySequenceHandler.cs" />
     <Compile Include="KeyboardHooks\KeySequenceHandlerNode.cs" />
+    <Compile Include="KeyboardHooks\KeySequenceProcessor.cs" />
     <Compile Include="KeyboardHooks\KeySequenceSpan.cs" />
     <Compile Include="KeyboardHooks\KeySequenceTable.cs" />
     <Compile Include="KeyboardHooks\KeyTrigger.cs" />
     <Compile Include="KeyboardHooks\ModifierKeys.cs" />
+    <Compile Include="KeyboardHooks\ScanCode.cs" />
     <Compile Include="KeyboardHooks\SequenceAlreadyRegisteredException.cs" />
+    <Compile Include="MessageHooks\MessageHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +90,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="WinApi\HookType.cs" />
+    <Compile Include="WinApi\Keyboard.cs" />
+    <Compile Include="WinApi\KeyStateByte.cs" />
+    <Compile Include="WinApi\KeyStateShort.cs" />
     <Compile Include="WinApi\WindowsMessage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
