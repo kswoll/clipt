@@ -8,6 +8,6 @@ namespace Clipt.WinApi
         public static extern KeyStateShort GetKeyState(KeyCode key);
 
         [DllImport("user32.dll")]
-        public static extern bool GetKeyboardState(byte[] keyState);
+        public static extern bool GetKeyboardState(KeyStateByte[] keyState);
     }
 }
