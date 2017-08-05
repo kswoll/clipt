@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Clipt.WinApi;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public class KeySender
     {

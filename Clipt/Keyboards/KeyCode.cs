@@ -1,7 +1,7 @@
 ﻿// <copyright file="KeyCodes.cs" company="PlanGrid, Inc.">
 //     Copyright (c) 2017 PlanGrid, Inc. All rights reserved.
 // </copyright>
-namespace Clipt.WinApi
+namespace Clipt.Keyboards
 {
     /// <summary>
     /// Enumeration for virtual keys.

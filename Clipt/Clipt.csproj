@@ -41,6 +41,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,27 +60,27 @@
   <ItemGroup>
     <Compile Include="Actions\PasteAction.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="KeyboardHooks\IKeySequenceNode.cs" />
-    <Compile Include="KeyboardHooks\KeyboardHook.cs" />
-    <Compile Include="KeyboardHooks\KeyData.cs" />
-    <Compile Include="KeyboardHooks\KeySender.cs" />
-    <Compile Include="KeyboardHooks\HotKey.cs" />
+    <Compile Include="Keyboards\IKeySequenceNode.cs" />
+    <Compile Include="Keyboards\KeyboardHook.cs" />
+    <Compile Include="Keyboards\KeyData.cs" />
+    <Compile Include="Keyboards\KeySender.cs" />
+    <Compile Include="Keyboards\HotKey.cs" />
+    <Compile Include="Keyboards\KeySequenceBranchResult.cs" />
     <Compile Include="Utils\BitUtils.cs" />
     <Compile Include="WinApi\Hooks.cs" />
+    <Compile Include="WinApi\Kernel.cs" />
     <Compile Include="WinApi\KeyboardLowLevelHookStruct.cs" />
     <Compile Include="WinApi\KeyboardLowLevelHookStructFlags.cs" />
-    <Compile Include="WinApi\KeyCode.cs" />
-    <Compile Include="KeyboardHooks\KeySequence.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceBranch.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceHandler.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceHandlerNode.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceProcessor.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceSpan.cs" />
-    <Compile Include="KeyboardHooks\KeySequenceTable.cs" />
-    <Compile Include="KeyboardHooks\KeyTrigger.cs" />
-    <Compile Include="KeyboardHooks\ModifierKeys.cs" />
-    <Compile Include="KeyboardHooks\ScanCode.cs" />
-    <Compile Include="KeyboardHooks\SequenceAlreadyRegisteredException.cs" />
+    <Compile Include="Keyboards\KeyCode.cs" />
+    <Compile Include="Keyboards\KeySequence.cs" />
+    <Compile Include="Keyboards\KeySequenceBranch.cs" />
+    <Compile Include="Keyboards\KeySequenceHandler.cs" />
+    <Compile Include="Keyboards\KeySequenceHandlerNode.cs" />
+    <Compile Include="Keyboards\KeySequenceProcessor.cs" />
+    <Compile Include="Keyboards\KeySequenceSpan.cs" />
+    <Compile Include="Keyboards\KeyTrigger.cs" />
+    <Compile Include="Keyboards\ModifierKeys.cs" />
+    <Compile Include="Keyboards\SequenceAlreadyRegisteredException.cs" />
     <Compile Include="MessageHooks\MessageHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

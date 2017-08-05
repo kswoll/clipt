@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public class KeySequence
     {

@@ -1,4 +1,4 @@
-﻿namespace Clipt.KeyboardHooks
+﻿namespace Clipt.Keyboards
 {
     public interface IKeySequenceNode
     {

@@ -1,20 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public class KeySequenceBranch : IKeySequenceNode
     {
         private readonly Dictionary<KeyTrigger, IKeySequenceNode> nodes = new Dictionary<KeyTrigger, IKeySequenceNode>();
 
-/*
-        public void Process(KeyData key)
+        private List<KeyTrigger> keys = new List<KeyTrigger>();
+
+        public KeySequenceBranchResult Process(KeyTrigger key, out KeySequenceBranch next)
         {
+            keys.Add(key);
+
             if (nodes.TryGetValue(key, out var node))
             {
-
+                switch (node)
+                {
+                    case KeySequenceHandlerNode handler:
+                        var handledKeys = keys.ToArray();
+                        keys.Clear();
+                        handler.Fire(handledKeys);
+                        next = default(KeySequenceBranch);
+                        return KeySequenceBranchResult.Handled;
+                    case KeySequenceBranch branch:
+                        next = branch;
+                        return KeySequenceBranchResult.Branched;
+                    default:
+                        throw new Exception();
+                }
             }
+
+            next = default(KeySequenceBranch);
+            return KeySequenceBranchResult.Unhandled;
         }
-*/
 
         public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler)
         {

@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using Clipt.WinApi;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public sealed class HotKey
     {
@@ -34,18 +34,6 @@ namespace Clipt.KeyboardHooks
         /// </summary>
         private class KeyboardWindow : Window
         {
-            [DllImport("User32.dll", SetLastError = true)]
-            private static extern bool RegisterHotKey(
-                [In] IntPtr hWnd,
-                [In] int id,
-                [In] uint fsModifiers,
-                [In] uint vk);
-
-            [DllImport("User32.dll", SetLastError = true)]
-            private static extern bool UnregisterHotKey(
-                [In] IntPtr hWnd,
-                [In] int id);
-
             private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
             private readonly WindowInteropHelper interop;
 
@@ -76,10 +64,10 @@ namespace Clipt.KeyboardHooks
 
             public void RegisterHotKey(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
             {
-                if (!RegisterHotKey(interop.Handle, nextHotKeyId, (uint)modifiers, (uint)key))
+                if (!Keyboard.RegisterHotKey(interop.Handle, nextHotKeyId, modifiers, (uint)key))
                 {
                     var error = Marshal.GetLastWin32Error();
-                    throw new Exception("Unable to register hotkey");
+                    throw new Exception($"Unable to register hotkey: {error}");
                 }
                 else
                 {
@@ -93,7 +81,7 @@ namespace Clipt.KeyboardHooks
                 var helper = new WindowInteropHelper(this);
                 foreach (var id in handlers.Keys)
                 {
-                    UnregisterHotKey(helper.Handle, id);
+                    Keyboard.UnregisterHotKey(helper.Handle, id);
                 }
             }
 

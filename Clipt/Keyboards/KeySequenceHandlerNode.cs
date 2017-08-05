@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public struct KeySequenceHandlerNode : IKeySequenceNode
     {
@@ -12,7 +11,7 @@ namespace Clipt.KeyboardHooks
             this.handler = handler;
         }
 
-        public void Fire(IReadOnlyList<KeyData> keys)
+        public void Fire(IReadOnlyList<KeyTrigger> keys)
         {
             handler(keys);
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public struct KeySequenceSpan
     {

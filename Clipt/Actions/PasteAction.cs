@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
-using Clipt.KeyboardHooks;
+using Clipt.Keyboards;
 using Clipt.WinApi;
 
 namespace Clipt.Actions

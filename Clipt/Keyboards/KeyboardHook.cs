@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Clipt.WinApi;
 
-namespace Clipt.KeyboardHooks
+namespace Clipt.Keyboards
 {
     public class KeyboardHook
     {
@@ -21,12 +21,12 @@ namespace Clipt.KeyboardHooks
             }
         }
 
-        public bool IsKeyPressed(KeyCode key)
+        public static bool IsKeyPressed(KeyCode key)
         {
             return keyPressedState[(byte)key] == KeyStateByte.Pressed;
         }
 
-        public bool IsKeyToggled(KeyCode key)
+        public static bool IsKeyToggled(KeyCode key)
         {
             return keyPressedState[(byte)key] == KeyStateByte.Toggled;
         }
@@ -41,7 +41,7 @@ namespace Clipt.KeyboardHooks
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
             {
-                return Hooks.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+                return Hooks.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, proc, Kernel.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
@@ -69,12 +69,17 @@ namespace Clipt.KeyboardHooks
                     break;
             }
 
+            if (nCode >= 0 && message == WindowMessage.WM_KEYDOWN)
+            {
+                bool isShiftDown = IsKeyPressed(KeyCode.LeftShift) || IsKeyPressed(KeyCode.RightShift);
+                KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown);
+            }
+
             if (nCode >= 0 && (message == WindowMessage.WM_KEYDOWN || message == WindowMessage.WM_SYSKEYDOWN || (message == WindowMessage.WM_IME_KEYDOWN)))
             {
                 var isExtended = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_EXTENDED) != 0;
                 var isInjected = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_INJECTED) != 0;
                 var keyData = new KeyData(keyCode, keyboardData.scanCode, isExtended, isInjected);
-//                KeySequenceProcessor.Process(keyData);
 //                var vkCode = (KeyCode)Marshal.ReadInt32(lParam);
 
 //                if (vkCode == KeyCode.Packet)
@@ -96,8 +101,5 @@ namespace Clipt.KeyboardHooks
 
             return Hooks.CallNextHookEx(hookId, nCode, wParam, lParam);
         }
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
     }
 }
