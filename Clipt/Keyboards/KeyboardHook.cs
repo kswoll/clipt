@@ -73,7 +73,10 @@ namespace Clipt.Keyboards
             if (nCode >= 0 && message == WindowMessage.WM_KEYDOWN)
             {
                 bool isShiftDown = IsKeyPressed(KeyCode.LeftShift) || IsKeyPressed(KeyCode.RightShift);
-                KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown);
+                if (KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown))
+                {
+                    return new IntPtr(1);
+                }
             }
 
             if (nCode >= 0 && (message == WindowMessage.WM_KEYDOWN || message == WindowMessage.WM_SYSKEYDOWN || (message == WindowMessage.WM_IME_KEYDOWN)))
@@ -89,7 +92,6 @@ namespace Clipt.Keyboards
 //                    KeySender.SendKeyPress(KeyCode.D);
 //                    return new IntPtr(1);
                 }
-/*
                 if (keyCode == KeyCode.A)
                 {
                     KeySender.SendKeyPress(KeyCode.Packet, 55356);
@@ -97,7 +99,6 @@ namespace Clipt.Keyboards
                     KeySender.SendKeyPress(KeyCode.Packet, 65039);
                     return new IntPtr(1);
                 }
-*/
             }
 
             return Hooks.CallNextHookEx(hookId, nCode, wParam, lParam);

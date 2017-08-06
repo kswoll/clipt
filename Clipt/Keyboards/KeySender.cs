@@ -7,6 +7,26 @@ namespace Clipt.Keyboards
 {
     public class KeySender
     {
+        public static void SendString(string s)
+        {
+            for (var i = 0; i < s.Length; i++)
+            {
+                if (char.IsSurrogatePair(s, i))
+                {
+                    bool isNextSurrogateToo = char.IsSurrogatePair(s, i + 1);
+                    var low = s[i];
+                    var high = s[i + 1];
+                    SendKeyPress(KeyCode.Packet, low);
+                    SendKeyPress(KeyCode.Packet, high);
+                    i++;
+                }
+                else
+                {
+                    SendKeyPress(KeyCode.Packet, s[i]);
+                }
+            }
+        }
+
         public static void SendKeyPress(KeyCode keyCode, ushort scanCode = 0)
         {
             SendInputs(

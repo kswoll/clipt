@@ -35,5 +35,17 @@ namespace Clipt.Apis
         {
             return keys.GetEnumerator();
         }
+
+        public void Substitute(string replacement)
+        {
+            Register(keys =>
+            {
+                foreach (var _ in keys)
+                {
+                    KeySender.SendKeyPress(KeyCode.Back);
+                }
+                KeySender.SendString(replacement);
+            });
+        }
     }
 }

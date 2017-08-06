@@ -12,7 +12,7 @@ namespace Clipt.Keyboards
 
         private ImmutableList<KeySequenceBranch> activeBranches = ImmutableList<KeySequenceBranch>.Empty;
 
-        public void ProcessKey(KeyCode key, bool isShiftDown)
+        public bool ProcessKey(KeyCode key, bool isShiftDown)
         {
             Debug.WriteLine($"key: {key}, isShiftDown: {isShiftDown}");
             var trigger = new KeyTrigger(key, isShiftDown);
@@ -28,9 +28,10 @@ namespace Clipt.Keyboards
                         break;
                     case KeySequenceBranchResult.Handled:
                         activeBranches = ImmutableList<KeySequenceBranch>.Empty;
-                        break;
+                        return true;
                 }
             }
+            return false;
         }
 
         public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler)
