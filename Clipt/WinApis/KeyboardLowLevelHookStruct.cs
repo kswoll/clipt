@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Clipt.Apis;
 using Clipt.Keyboards;
 
-namespace Clipt.WinApi
+namespace Clipt.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct KeyboardLowLevelHookStruct

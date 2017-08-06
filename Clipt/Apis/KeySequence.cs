@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Clipt.Keyboards;
 
-namespace Clipt.Keyboards
+namespace Clipt.Apis
 {
     public class KeySequence : IEnumerable<KeyTrigger>
     {
         public int Count => keys.Count;
         public KeyTrigger this[int index] => keys[index];
         public KeySequenceSpan Start => new KeySequenceSpan(this, 0, Count);
+        public void Register(KeySequenceHandler handler) => KeySequenceProcessor.Instance.RegisterSequence(this, handler);
 
-        private IReadOnlyList<KeyTrigger> keys;
+        private readonly IReadOnlyList<KeyTrigger> keys;
 
         public KeySequence(params KeyTrigger[] keys) : this((IEnumerable<KeyTrigger>)keys)
         {

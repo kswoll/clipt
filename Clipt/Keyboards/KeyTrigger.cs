@@ -1,4 +1,6 @@
-﻿namespace Clipt.Keyboards
+﻿using Clipt.Apis;
+
+namespace Clipt.Keyboards
 {
     public struct KeyTrigger
     {

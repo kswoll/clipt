@@ -1,6 +1,6 @@
 ﻿using Clipt.Utils;
 
-namespace Clipt.WinApi
+namespace Clipt.WinApis
 {
     public enum KeyStateByte : byte
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Clipt.WinApi;
+using Clipt.Apis;
+using Clipt.WinApis;
 
 namespace Clipt.Keyboards
 {
@@ -17,7 +18,7 @@ namespace Clipt.Keyboards
             hookId = SetHook(proc);
             if (hookId == null)
             {
-                Keyboard.GetKeyboardState(keyPressedState);
+                WinApi.GetKeyboardState(keyPressedState);
             }
         }
 

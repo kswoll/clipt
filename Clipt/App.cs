@@ -3,17 +3,14 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Clipt.Actions;
 using Clipt.Keyboards;
 using Clipt.MessageHooks;
-using Clipt.WinApi;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Clipt
 {
     public class App : Application
     {
-        private static HotKey hotKey;
         private static TaskbarIcon notifyIcon;
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -44,13 +41,6 @@ namespace Clipt
         {
             base.OnStartup(e);
 
-            hotKey = new HotKey();
-            hotKey.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () => new PasteAction().OnPaste());
-
-            KeySequenceProcessor.Instance.RegisterSequence(
-                new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T),
-                keys => Debug.WriteLine("Success"));
-
             var logo = new BitmapImage();
             logo.BeginInit();
             logo.UriSource = new Uri("pack://application:,,,/Clipt;component/Assets/Wintomaton.ico");
@@ -68,6 +58,8 @@ namespace Clipt
                 ToolTipText = "Wintomaton",
                 ContextMenu = contextMenu
             };
+
+            Script.Run();
         }
     }
 }

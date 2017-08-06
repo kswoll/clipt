@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Clipt.WinApi
+namespace Clipt.WinApis
 {
     [Flags]
     public enum KeyboardLowLevelHookStructFlags : uint

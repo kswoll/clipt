@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Clipt.WinApi
+namespace Clipt.WinApis
 {
     public static class Kernel
     {

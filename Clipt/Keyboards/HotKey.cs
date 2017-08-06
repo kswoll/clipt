@@ -7,20 +7,21 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using Clipt.WinApi;
+using Clipt.Apis;
+using Clipt.WinApis;
 
 namespace Clipt.Keyboards
 {
-    public sealed class HotKey
+    public static class HotKey
     {
-        private readonly KeyboardWindow window = new KeyboardWindow();
+        private static readonly KeyboardWindow window = new KeyboardWindow();
 
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
+        public static void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
         {
             window.RegisterHotKey(modifiers, key, handler);
         }
 
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
+        public static void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
         {
             window.RegisterHotKey(modifiers, key, () =>
             {
@@ -64,7 +65,7 @@ namespace Clipt.Keyboards
 
             public void RegisterHotKey(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
             {
-                if (!Keyboard.RegisterHotKey(interop.Handle, nextHotKeyId, modifiers, (uint)key))
+                if (!WinApi.RegisterHotKey(interop.Handle, nextHotKeyId, modifiers, (uint)key))
                 {
                     var error = Marshal.GetLastWin32Error();
                     throw new Exception($"Unable to register hotkey: {error}");
@@ -81,7 +82,7 @@ namespace Clipt.Keyboards
                 var helper = new WindowInteropHelper(this);
                 foreach (var id in handlers.Keys)
                 {
-                    Keyboard.UnregisterHotKey(helper.Handle, id);
+                    WinApi.UnregisterHotKey(helper.Handle, id);
                 }
             }
 

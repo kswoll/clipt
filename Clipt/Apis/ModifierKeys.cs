@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Clipt.Keyboards
+namespace Clipt.Apis
 {
     [Flags]
     public enum ModifierKeys : uint

@@ -1,4 +1,4 @@
-﻿namespace Clipt.WinApi
+﻿namespace Clipt.WinApis
 {
     public enum WindowMessage
     {

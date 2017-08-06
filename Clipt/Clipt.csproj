@@ -62,7 +62,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\PasteAction.cs" />
+    <Compile Include="Apis\Clipboard.cs" />
+    <Compile Include="Apis\Keyboard.cs" />
+    <Compile Include="Apis\TextTransform.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Keyboards\IKeySequenceNode.cs" />
     <Compile Include="Keyboards\KeyboardHook.cs" />
@@ -70,20 +72,25 @@
     <Compile Include="Keyboards\KeySender.cs" />
     <Compile Include="Keyboards\HotKey.cs" />
     <Compile Include="Keyboards\KeySequenceBranchResult.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="TextTransforms\TrimIndent.cs" />
     <Compile Include="Utils\BitUtils.cs" />
-    <Compile Include="WinApi\Hooks.cs" />
-    <Compile Include="WinApi\Kernel.cs" />
-    <Compile Include="WinApi\KeyboardLowLevelHookStruct.cs" />
-    <Compile Include="WinApi\KeyboardLowLevelHookStructFlags.cs" />
-    <Compile Include="Keyboards\KeyCode.cs" />
-    <Compile Include="Keyboards\KeySequence.cs" />
+    <Compile Include="WinApis\HARDWAREINPUT.cs" />
+    <Compile Include="WinApis\Hooks.cs" />
+    <Compile Include="WinApis\INPUT.cs" />
+    <Compile Include="WinApis\Kernel.cs" />
+    <Compile Include="WinApis\KEYBDINPUT.cs" />
+    <Compile Include="WinApis\KeyboardLowLevelHookStruct.cs" />
+    <Compile Include="WinApis\KeyboardLowLevelHookStructFlags.cs" />
+    <Compile Include="Apis\KeyCode.cs" />
+    <Compile Include="Apis\KeySequence.cs" />
     <Compile Include="Keyboards\KeySequenceBranch.cs" />
     <Compile Include="Keyboards\KeySequenceHandler.cs" />
     <Compile Include="Keyboards\KeySequenceHandlerNode.cs" />
     <Compile Include="Keyboards\KeySequenceProcessor.cs" />
     <Compile Include="Keyboards\KeySequenceSpan.cs" />
     <Compile Include="Keyboards\KeyTrigger.cs" />
-    <Compile Include="Keyboards\ModifierKeys.cs" />
+    <Compile Include="Apis\ModifierKeys.cs" />
     <Compile Include="Keyboards\SequenceAlreadyRegisteredException.cs" />
     <Compile Include="MessageHooks\MessageHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -99,12 +106,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="WinApi\HookType.cs" />
-    <Compile Include="WinApi\Keyboard.cs" />
-    <Compile Include="WinApi\KeyStateByte.cs" />
-    <Compile Include="WinApi\KeyStateShort.cs" />
-    <Compile Include="WinApi\LowLevelKeyboardProc.cs" />
-    <Compile Include="WinApi\WindowsMessage.cs" />
+    <Compile Include="WinApis\HookType.cs" />
+    <Compile Include="WinApis\KEYEVENTF.cs" />
+    <Compile Include="WinApis\Messages.cs" />
+    <Compile Include="WinApis\MOUSEINPUT.cs" />
+    <Compile Include="WinApis\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="WinApis\WinApi.cs" />
+    <Compile Include="WinApis\KeyStateByte.cs" />
+    <Compile Include="WinApis\KeyStateShort.cs" />
+    <Compile Include="WinApis\LowLevelKeyboardProc.cs" />
+    <Compile Include="WinApis\WindowsMessage.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
