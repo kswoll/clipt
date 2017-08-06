@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Clipt.Keyboards;
+using Clipt.WinApis;
 
 namespace Clipt.Apis
 {
@@ -24,6 +25,12 @@ namespace Clipt.Apis
             this.keys = keys.ToArray();
             if (this.keys.Count == 0)
                 throw new ArgumentException(nameof(keys));
+        }
+
+        public static KeySequence FromString(string input)
+        {
+            var layout = WinApi.GetKeyboardLayout(0);
+            return new KeySequence(input.Select(x => WinApi.VkKeyScanEx(x, layout)).Select(x => new KeyTrigger(x.Key, x.Modifiers.HasFlag(VkKeyScanModifierKeys.Shift))));
         }
 
         IEnumerator IEnumerable.GetEnumerator()

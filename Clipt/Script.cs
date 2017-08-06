@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Clipt.Apis;
+using Clipt.Utils;
+using Clipt.WinApis;
 
 namespace Clipt
 {
@@ -14,7 +16,13 @@ namespace Clipt
                 Clipboard.Paste(text);
             });
 
-            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("hello");
+            var layout = WinApi.GetKeyboardLayout(0);
+            var result = WinApi.VkKeyScanEx('D', layout);
+//            var lowOrderByte = BitUtils.GetLowOrderByte(result);
+//            var highOrderByte = BitUtils.GetHighOrderByte(result);
+
+            KeySequence.FromString("tEst").Substitute("🏗️");
+//            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("hello");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("🏗️");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Register(keys => Debug.WriteLine("Success"));
         }

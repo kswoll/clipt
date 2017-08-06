@@ -14,5 +14,15 @@
         {
             return (value & HighOrderBitMaskUShort) != 0;
         }
+
+        public static byte GetHighOrderByte(ushort value)
+        {
+            return (byte)((value & 0xFF00) >> 8);
+        }
+
+        public static byte GetLowOrderByte(ushort value)
+        {
+            return (byte)(value & 0x00FF);
+        }
     }
 }

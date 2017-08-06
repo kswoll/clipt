@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
 using Clipt.Apis;
+using Clipt.WinApis;
 
 namespace Clipt.Keyboards
 {
@@ -14,6 +15,12 @@ namespace Clipt.Keyboards
 
         public bool ProcessKey(KeyCode key, bool isShiftDown)
         {
+            var character = WinApi.MapVirtualKey((uint)key, MapVirtualKeyType.VirtualKeyToChar);
+            if (character == 0)
+            {
+                return false;
+            }
+
             Debug.WriteLine($"key: {key}, isShiftDown: {isShiftDown}");
             var trigger = new KeyTrigger(key, isShiftDown);
             foreach (var branch in activeBranches.Add(root))

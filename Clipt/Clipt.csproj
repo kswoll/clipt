@@ -76,9 +76,7 @@
     <Compile Include="TextTransforms\TrimIndent.cs" />
     <Compile Include="Utils\BitUtils.cs" />
     <Compile Include="WinApis\HARDWAREINPUT.cs" />
-    <Compile Include="WinApis\Hooks.cs" />
     <Compile Include="WinApis\INPUT.cs" />
-    <Compile Include="WinApis\Kernel.cs" />
     <Compile Include="WinApis\KEYBDINPUT.cs" />
     <Compile Include="WinApis\KeyboardLowLevelHookStruct.cs" />
     <Compile Include="WinApis\KeyboardLowLevelHookStructFlags.cs" />
@@ -108,9 +106,11 @@
     </Compile>
     <Compile Include="WinApis\HookType.cs" />
     <Compile Include="WinApis\KEYEVENTF.cs" />
-    <Compile Include="WinApis\Messages.cs" />
+    <Compile Include="WinApis\MapVirtualKeyType.cs" />
     <Compile Include="WinApis\MOUSEINPUT.cs" />
     <Compile Include="WinApis\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="WinApis\VkKeyScanExResult.cs" />
+    <Compile Include="WinApis\VkKeyScanModifierKeys.cs" />
     <Compile Include="WinApis\WinApi.cs" />
     <Compile Include="WinApis\KeyStateByte.cs" />
     <Compile Include="WinApis\KeyStateShort.cs" />

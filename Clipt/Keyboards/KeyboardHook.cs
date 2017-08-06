@@ -34,7 +34,7 @@ namespace Clipt.Keyboards
 
         public static void Unhook()
         {
-            Hooks.UnhookWindowsHookEx(hookId);
+            WinApi.UnhookWindowsHookEx(hookId);
         }
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -42,7 +42,7 @@ namespace Clipt.Keyboards
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
             {
-                return Hooks.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, proc, Kernel.GetModuleHandle(curModule.ModuleName), 0);
+                return WinApi.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, proc, WinApi.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
@@ -92,6 +92,7 @@ namespace Clipt.Keyboards
 //                    KeySender.SendKeyPress(KeyCode.D);
 //                    return new IntPtr(1);
                 }
+/*
                 if (keyCode == KeyCode.A)
                 {
                     KeySender.SendKeyPress(KeyCode.Packet, 55356);
@@ -99,9 +100,10 @@ namespace Clipt.Keyboards
                     KeySender.SendKeyPress(KeyCode.Packet, 65039);
                     return new IntPtr(1);
                 }
+*/
             }
 
-            return Hooks.CallNextHookEx(hookId, nCode, wParam, lParam);
+            return WinApi.CallNextHookEx(hookId, nCode, wParam, lParam);
         }
     }
 }
