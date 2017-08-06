@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace Clipt.Keyboards
     {
         public static KeySequenceProcessor Instance { get; } = new KeySequenceProcessor();
 
-        private readonly KeySequenceBranch root = new KeySequenceBranch();
+        private readonly KeySequenceBranch root = new KeySequenceBranch(ImmutableList<KeyTrigger>.Empty);
         private readonly List<KeySequenceBranch> activeBranches = new List<KeySequenceBranch>();
 
         public void ProcessKey(KeyCode key, bool isShiftDown)
@@ -17,7 +18,7 @@ namespace Clipt.Keyboards
             var trigger = new KeyTrigger(key, isShiftDown);
             foreach (var branch in activeBranches.Concat(new[] { root }).ToArray())
             {
-                switch (root.Process(trigger, out var newBranch))
+                switch (branch.Process(trigger, out var newBranch))
                 {
                     case KeySequenceBranchResult.Unhandled:
                         activeBranches.Remove(branch);

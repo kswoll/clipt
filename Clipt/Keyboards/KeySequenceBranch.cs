@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Clipt.Keyboards
 {
     public class KeySequenceBranch : IKeySequenceNode
     {
         private readonly Dictionary<KeyTrigger, IKeySequenceNode> nodes = new Dictionary<KeyTrigger, IKeySequenceNode>();
+        private readonly ImmutableList<KeyTrigger> prelude;
 
-        private List<KeyTrigger> keys = new List<KeyTrigger>();
+        public KeySequenceBranch(ImmutableList<KeyTrigger> prelude)
+        {
+            this.prelude = prelude;
+        }
 
         public KeySequenceBranchResult Process(KeyTrigger key, out KeySequenceBranch next)
         {
-            keys.Add(key);
-
             if (nodes.TryGetValue(key, out var node))
             {
                 switch (node)
                 {
                     case KeySequenceHandlerNode handler:
-                        var handledKeys = keys.ToArray();
-                        keys.Clear();
-                        handler.Fire(handledKeys);
+                        var handledKeys = prelude.Add(key);
+                        handler.Fire(handledKeys.Add(key));
                         next = default(KeySequenceBranch);
                         return KeySequenceBranchResult.Handled;
                     case KeySequenceBranch branch:
@@ -63,7 +65,7 @@ namespace Clipt.Keyboards
                 }
                 else
                 {
-                    branch = new KeySequenceBranch();
+                    branch = new KeySequenceBranch(span.Prefix.ToImmutableList());
                     nodes[span.Trigger] = branch;
                 }
             }

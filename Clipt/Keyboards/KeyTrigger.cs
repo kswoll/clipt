@@ -20,5 +20,29 @@
         {
             return new KeyTrigger(trigger.keyCode, trigger.isShiftDown);
         }
+
+        public override string ToString()
+        {
+            return $"{Key}, IsShiftDown: {IsShiftDown}";
+        }
+
+        public bool Equals(KeyTrigger other)
+        {
+            return Key == other.Key && IsShiftDown == other.IsShiftDown;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is KeyTrigger && Equals((KeyTrigger)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((int)Key * 397) ^ IsShiftDown.GetHashCode();
+            }
+        }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Clipt.Keyboards
 {
-    public class KeySequence
+    public class KeySequence : IEnumerable<KeyTrigger>
     {
-        public IReadOnlyList<KeyTrigger> Keys { get; }
+        public int Count => keys.Count;
+        public KeyTrigger this[int index] => keys[index];
+        public KeySequenceSpan Start => new KeySequenceSpan(this, 0, Count);
 
-        public KeySequenceSpan Start => new KeySequenceSpan(this, 0, Keys.Count);
+        private IReadOnlyList<KeyTrigger> keys;
 
         public KeySequence(params KeyTrigger[] keys) : this((IEnumerable<KeyTrigger>)keys)
         {
@@ -16,9 +19,19 @@ namespace Clipt.Keyboards
 
         public KeySequence(IEnumerable<KeyTrigger> keys)
         {
-            Keys = keys.ToArray();
-            if (Keys.Count == 0)
+            this.keys = keys.ToArray();
+            if (this.keys.Count == 0)
                 throw new ArgumentException(nameof(keys));
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<KeyTrigger> GetEnumerator()
+        {
+            return keys.GetEnumerator();
         }
     }
 }
