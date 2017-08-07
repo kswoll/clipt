@@ -29,8 +29,7 @@ namespace Clipt.Apis
 
         public static KeySequence FromString(string input)
         {
-            var layout = WinApi.GetKeyboardLayout(0);
-            return new KeySequence(input.Select(x => WinApi.VkKeyScanEx(x, layout)).Select(x => new KeyTrigger(x.Key, x.Modifiers.HasFlag(VkKeyScanModifierKeys.Shift))));
+            return new KeySequence(input.Select(x => WinApi.VkKeyScan(x)).Select(x => new KeyTrigger(x.Key, x.Modifiers.HasFlag(VkKeyScanModifierKeys.Shift))));
         }
 
         IEnumerator IEnumerable.GetEnumerator()

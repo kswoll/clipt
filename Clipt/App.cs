@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Clipt.Keyboards;
-using Clipt.MessageHooks;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Clipt
@@ -25,7 +24,6 @@ namespace Clipt
             var app = new App();
 
             KeyboardHook.Hook();
-            MessageHook.Hook();
             try
             {
                 app.Run();
@@ -33,7 +31,6 @@ namespace Clipt
             finally
             {
                 KeyboardHook.Unhook();
-                MessageHook.Unhook();
             }
         }
 
@@ -58,6 +55,8 @@ namespace Clipt
                 ToolTipText = "Wintomaton",
                 ContextMenu = contextMenu
             };
+
+//            notifyIcon.ShowBalloonTip("Title", "Content", BalloonIcon.Error);
 
             Script.Run();
         }

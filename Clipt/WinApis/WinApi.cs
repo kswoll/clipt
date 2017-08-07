@@ -44,6 +44,9 @@ namespace Clipt.WinApis
         internal static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        internal static extern VkKeyScanExResult VkKeyScan(char ch);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern VkKeyScanExResult VkKeyScanEx(char ch, IntPtr dwhkl);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]

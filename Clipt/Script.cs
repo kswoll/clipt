@@ -16,8 +16,8 @@ namespace Clipt
                 Clipboard.Paste(text);
             });
 
-            var layout = WinApi.GetKeyboardLayout(0);
-            var result = WinApi.VkKeyScanEx('D', layout);
+//            var layout = WinApi.GetKeyboardLayout(0);
+//            var result = WinApi.VkKeyScanEx('D', layout);
 //            var lowOrderByte = BitUtils.GetLowOrderByte(result);
 //            var highOrderByte = BitUtils.GetHighOrderByte(result);
 
