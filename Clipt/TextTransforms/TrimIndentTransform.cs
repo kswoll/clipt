@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Clipt.TextTransforms
 {
-    public class TrimIndent
+    public class TrimIndentTransform
     {
         public static string Transform(string text)
         {

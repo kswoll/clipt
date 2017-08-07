@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Clipt.Apis;
+using Clipt.Keyboards;
 
 namespace Clipt.WinApis
 {

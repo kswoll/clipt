@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using Clipt.Apis;
 using Clipt.WinApis;
 
 namespace Clipt.Keyboards

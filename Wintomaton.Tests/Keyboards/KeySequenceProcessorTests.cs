@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Clipt.Apis;
 using NUnit.Framework;
 using Clipt.Keyboards;
 

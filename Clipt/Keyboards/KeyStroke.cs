@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Clipt.Apis;
 
 namespace Clipt.Keyboards
 {
@@ -33,9 +32,9 @@ namespace Clipt.Keyboards
             }
         }
 
-        public KeyStrokeResult ProcessKey(KeyCode key)
+        public bool ProcessKey(ImmutableHashSet<KeyCode> activeKeys)
         {
-            throw new NotImplementedException();
+            return keySet.Except(activeKeys).Count == 0;
         }
 
         public override int GetHashCode()

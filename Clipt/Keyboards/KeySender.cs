@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Clipt.Apis;
 using Clipt.WinApis;
 
 namespace Clipt.Keyboards

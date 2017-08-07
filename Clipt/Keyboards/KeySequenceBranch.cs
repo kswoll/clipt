@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Clipt.Apis;
 
 namespace Clipt.Keyboards
 {
@@ -22,8 +21,7 @@ namespace Clipt.Keyboards
                 switch (node)
                 {
                     case KeySequenceHandlerNode handler:
-                        var handledKeys = prelude.Add(key);
-                        handler.Fire(handledKeys.Add(key));
+                        handler.Fire(handler.Sequence);
                         next = default(KeySequenceBranch);
                         return KeySequenceBranchResult.Handled;
                     case KeySequenceBranch branch:
@@ -61,7 +59,7 @@ namespace Clipt.Keyboards
             {
                 if (span.IsTerminal)
                 {
-                    nodes[span.Trigger] = new KeySequenceHandlerNode(handler);
+                    nodes[span.Trigger] = new KeySequenceHandlerNode(span.Sequence, handler);
                     return;
                 }
                 else

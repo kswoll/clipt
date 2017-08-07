@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Clipt.Keyboards;
 using Clipt.WinApis;
 
-namespace Clipt.Apis
+namespace Clipt.Keyboards
 {
     public class KeySequence : IEnumerable<KeyTrigger>
     {

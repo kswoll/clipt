@@ -63,9 +63,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apis\Clipboard.cs" />
-    <Compile Include="Apis\Keyboard.cs" />
-    <Compile Include="Apis\TextTransform.cs" />
+    <Compile Include="Utils\ClipboardUtils.cs" />
+    <Compile Include="Keyboards\KeyboardUtils.cs" />
+    <Compile Include="Utils\TextUtils.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Keyboards\IKeySequenceNode.cs" />
     <Compile Include="Keyboards\KeyboardHook.cs" />
@@ -75,25 +75,25 @@
     <Compile Include="Keyboards\KeySequenceBranchResult.cs" />
     <Compile Include="Keyboards\KeyStroke.cs" />
     <Compile Include="Keyboards\KeyStrokeProcessor.cs" />
-    <Compile Include="Keyboards\KeyStrokeResult.cs" />
     <Compile Include="Keyboards\KeyStrokeSet.cs" />
     <Compile Include="Script.cs" />
-    <Compile Include="TextTransforms\TrimIndent.cs" />
+    <Compile Include="TestScript.cs" />
+    <Compile Include="TextTransforms\TrimIndentTransform.cs" />
     <Compile Include="Utils\BitUtils.cs" />
     <Compile Include="WinApis\HARDWAREINPUT.cs" />
     <Compile Include="WinApis\INPUT.cs" />
     <Compile Include="WinApis\KEYBDINPUT.cs" />
     <Compile Include="WinApis\KeyboardLowLevelHookStruct.cs" />
     <Compile Include="WinApis\KeyboardLowLevelHookStructFlags.cs" />
-    <Compile Include="Apis\KeyCode.cs" />
-    <Compile Include="Apis\KeySequence.cs" />
+    <Compile Include="Keyboards\KeyCode.cs" />
+    <Compile Include="Keyboards\KeySequence.cs" />
     <Compile Include="Keyboards\KeySequenceBranch.cs" />
     <Compile Include="Keyboards\KeySequenceHandler.cs" />
     <Compile Include="Keyboards\KeySequenceHandlerNode.cs" />
     <Compile Include="Keyboards\KeySequenceProcessor.cs" />
     <Compile Include="Keyboards\KeySequenceSpan.cs" />
     <Compile Include="Keyboards\KeyTrigger.cs" />
-    <Compile Include="Apis\ModifierKeys.cs" />
+    <Compile Include="Keyboards\ModifierKeys.cs" />
     <Compile Include="Keyboards\SequenceAlreadyRegisteredException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -137,6 +137,7 @@
   <ItemGroup>
     <Resource Include="Assets\Wintomaton.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

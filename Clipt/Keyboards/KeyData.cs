@@ -1,6 +1,4 @@
-﻿using Clipt.Apis;
-
-namespace Clipt.Keyboards
+﻿namespace Clipt.Keyboards
 {
     public struct KeyData
     {

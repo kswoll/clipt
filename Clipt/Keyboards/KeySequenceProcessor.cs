@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics;
-using Clipt.Apis;
 using Clipt.WinApis;
 
 namespace Clipt.Keyboards

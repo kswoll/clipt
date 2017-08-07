@@ -2,5 +2,5 @@
 
 namespace Clipt.Keyboards
 {
-    public delegate void KeySequenceHandler(IReadOnlyList<KeyTrigger> keys);
+    public delegate void KeySequenceHandler(KeySequence sequence);
 }
