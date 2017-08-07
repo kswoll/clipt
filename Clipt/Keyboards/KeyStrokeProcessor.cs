@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Windows;
 
 namespace Clipt.Keyboards
 {
@@ -10,18 +12,32 @@ namespace Clipt.Keyboards
         private readonly Dictionary<KeyCode, ImmutableList<KeyStroke>> keyStrokesByKey = new Dictionary<KeyCode, ImmutableList<KeyStroke>>();
 
         private ImmutableHashSet<KeyCode> activeKeys = ImmutableHashSet<KeyCode>.Empty;
-        private Dictionary<KeyStroke, >
+        private ImmutableDictionary<KeyStroke, KeyStrokeHandler> handlersByKeyStroke = ImmutableDictionary<KeyStroke, KeyStrokeHandler>.Empty;
 
         public bool ProcessKey(KeyCode key)
         {
             if (keyStrokesByKey.TryGetValue(key, out var keyStrokes))
             {
-                activeKeys.Add(key);
+                activeKeys = activeKeys.Add(key);
                 foreach (var keyStroke in keyStrokes)
                 {
-                    if (keyStroke.ProcessKey(key, activeKeys))
+                    if (keyStroke.ProcessKey(activeKeys))
                     {
-                        keyStroke.Activate();
+                        var handler = handlersByKeyStroke[keyStroke];
+
+                        try
+                        {
+                            handler(keyStroke);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.ToString());
+                        }
+                        finally
+                        {
+                            activeKeys = ImmutableHashSet<KeyCode>.Empty;
+                        }
+                        break;
                     }
                 }
             }
@@ -32,7 +48,7 @@ namespace Clipt.Keyboards
             return false;
         }
 
-        public void Register(KeyStroke keyStroke)
+        public void Register(KeyStroke keyStroke, KeyStrokeHandler handler)
         {
             foreach (var key in keyStroke)
             {
@@ -44,6 +60,8 @@ namespace Clipt.Keyboards
 
                 list.Add(keyStroke);
             }
+
+            handlersByKeyStroke = handlersByKeyStroke.SetItem(keyStroke, handler);
         }
     }
 }

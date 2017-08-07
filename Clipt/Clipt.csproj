@@ -63,6 +63,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keyboards\KeyStrokeHandler.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Keyboards\KeyboardUtils.cs" />
     <Compile Include="Utils\TextUtils.cs" />

@@ -58,7 +58,8 @@ namespace Clipt
 
 //            notifyIcon.ShowBalloonTip("Title", "Content", BalloonIcon.Error);
 
-            Script.Run();
+            var script = new TestScript();
+            script.Run();
         }
     }
 }

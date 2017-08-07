@@ -3,15 +3,15 @@ using Clipt.Utils;
 
 namespace Clipt
 {
-    public class TestScript
+    public class TestScript : Script
     {
-        public static void Run()
+        public override void Run()
         {
             KeyboardUtils.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
             {
                 var text = System.Windows.Clipboard.GetText();
-                text = TextUtils.TrimIndent(text);
-                ClipboardUtils.Paste(text);
+                text = Text.TrimIndent(text);
+                Clipboard.Paste(text);
             });
 
 //            var layout = WinApi.GetKeyboardLayout(0);

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Clipt.Keyboards;
 
 namespace Wintomaton.Tests.Keyboards
@@ -11,40 +10,40 @@ namespace Wintomaton.Tests.Keyboards
         public void OneKeyHandler()
         {
             var processor = new KeySequenceProcessor();
-            IReadOnlyList<KeyTrigger> handledKeys = null;
-            processor.RegisterSequence(new KeySequence(KeyCode.A), keys => handledKeys = keys);
+            KeySequence sequence = null;
+            processor.RegisterSequence(new KeySequence(KeyCode.A), keys => sequence = keys);
             processor.ProcessKey(KeyCode.A, false);
 
-            Assert.IsNotNull(handledKeys);
-            Assert.AreEqual(KeyCode.A, handledKeys[0].Key);
-            Assert.IsFalse(handledKeys[0].IsShiftDown);
+            Assert.IsNotNull(sequence);
+            Assert.AreEqual(KeyCode.A, sequence[0].Key);
+            Assert.IsFalse(sequence[0].IsShiftDown);
         }
 
         [Test]
         public void OneKeyHandlerCapitalLetter()
         {
             var processor = new KeySequenceProcessor();
-            IReadOnlyList<KeyTrigger> handledKeys = null;
-            processor.RegisterSequence(new KeySequence((KeyCode.A, true)), keys => handledKeys = keys);
+            KeySequence sequence = null;
+            processor.RegisterSequence(new KeySequence((KeyCode.A, true)), keys => sequence = keys);
             processor.ProcessKey(KeyCode.A, true);
 
-            Assert.IsNotNull(handledKeys);
-            Assert.AreEqual(KeyCode.A, handledKeys[0].Key);
-            Assert.IsTrue(handledKeys[0].IsShiftDown);
+            Assert.IsNotNull(sequence);
+            Assert.AreEqual(KeyCode.A, sequence[0].Key);
+            Assert.IsTrue(sequence[0].IsShiftDown);
         }
 
         [Test]
         public void OnKeyHandlerTwoCharacters()
         {
             var processor = new KeySequenceProcessor();
-            IReadOnlyList<KeyTrigger> handledKeys = null;
-            processor.RegisterSequence(new KeySequence(KeyCode.A, KeyCode.S), keys => handledKeys = keys);
+            KeySequence sequence = null;
+            processor.RegisterSequence(new KeySequence(KeyCode.A, KeyCode.S), keys => sequence = keys);
             processor.ProcessKey(KeyCode.A, false);
             processor.ProcessKey(KeyCode.S, false);
 
-            Assert.IsNotNull(handledKeys);
-            Assert.AreEqual(KeyCode.A, handledKeys[0].Key);
-            Assert.AreEqual(KeyCode.S, handledKeys[1].Key);
+            Assert.IsNotNull(sequence);
+            Assert.AreEqual(KeyCode.A, sequence[0].Key);
+            Assert.AreEqual(KeyCode.S, sequence[1].Key);
         }
     }
 }
