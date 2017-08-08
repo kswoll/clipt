@@ -55,6 +55,7 @@ namespace Clipt.Keyboards
                 if (!keyStrokesByKey.TryGetValue(key, out var list))
                 {
                     list = ImmutableList<KeyStroke>.Empty;
+                    list = list.Add(keyStroke);
                     keyStrokesByKey[key] = list;
                 }
 
