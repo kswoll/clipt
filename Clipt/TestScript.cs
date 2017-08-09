@@ -8,6 +8,8 @@ namespace Clipt
     {
         public override void Run()
         {
+            EnableKeyboardHook();
+
             Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
             {
                 var text = System.Windows.Clipboard.GetText();
@@ -20,7 +22,7 @@ namespace Clipt
                 KeyCode.Escape,
                 () => Application.Current.Shutdown());
 
-            Keyboard.RegisterStroke(new KeyStroke(KeyCode.LeftControl, KeyCode.LeftMenu, KeyCode.R), stroke => Debug.WriteLine("Stroked!"));
+//            Keyboard.RegisterStroke(new KeyStroke(KeyCode.LeftControl, KeyCode.LeftMenu, KeyCode.R), stroke => Debug.WriteLine("Stroked!"));
 
             Keyboard.RegisterStroke(new KeyStroke(KeyCode.ExtraButton2), _ =>
             {
@@ -34,7 +36,8 @@ namespace Clipt
                 Keyboard.SendKeyPress(KeyCode.End);
                 Keyboard.SendKeyUp(KeyCode.Control);
             });
-            Keyboard.RegisterStroke(new KeyStroke(KeyCode.F24, KeyCode.Left), new KeyStroke(KeyCode.Home));
+
+            Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));
 
 //            Keyboard.ReplaceKey(KeyCode.N1, KeyCode.N2);
 //            Keyboard.ReplaceKey(KeyCode.N2, KeyCode.RightButton);

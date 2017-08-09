@@ -63,9 +63,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keyboards\HotKeyHandler.cs" />
+    <Compile Include="Keyboards\HotKeyProcessor.cs" />
     <Compile Include="Keyboards\KeyCodes.cs" />
     <Compile Include="Keyboards\KeyReplacementProcessor.cs" />
     <Compile Include="Keyboards\KeyStrokeHandler.cs" />
+    <Compile Include="Keyboards\Shortcut.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Keyboards\KeyboardUtils.cs" />
     <Compile Include="Utils\TextUtils.cs" />

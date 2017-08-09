@@ -11,8 +11,7 @@ namespace Clipt
     public class App : Application
     {
         private static TaskbarIcon notifyIcon;
-
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        private static Script script;
 
         /// <summary>
         /// Application Entry Point.
@@ -23,14 +22,13 @@ namespace Clipt
         {
             var app = new App();
 
-            InputHook.Hook();
             try
             {
                 app.Run();
             }
             finally
             {
-                InputHook.Unhook();
+                ((IDisposable)script)?.Dispose();
             }
         }
 
@@ -58,7 +56,7 @@ namespace Clipt
 
 //            notifyIcon.ShowBalloonTip("Title", "Content", BalloonIcon.Error);
 
-            var script = new TestScript();
+            script = new TestScript();
             script.Run();
         }
     }

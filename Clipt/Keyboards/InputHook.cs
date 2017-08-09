@@ -14,26 +14,33 @@ namespace Clipt.Keyboards
         private static IntPtr keyboardHookId;
         private static IntPtr mouseHookId;
 
-        public static void Hook()
-        {
-            SetHook();
-            WinApi.GetKeyboardState(keyPressedState);
-        }
-
-        public static void Unhook()
-        {
-            WinApi.UnhookWindowsHookEx(keyboardHookId);
-            WinApi.UnhookWindowsHookEx(mouseHookId);
-        }
-
-        private static void SetHook()
+        public static void HookKeyboard()
         {
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
             {
                 keyboardHookId = WinApi.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, KeyboardHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
+            }
+            WinApi.GetKeyboardState(keyPressedState);
+        }
+
+        public static void UnhookKeyboard()
+        {
+            WinApi.UnhookWindowsHookEx(keyboardHookId);
+        }
+
+        public static void HookMouse()
+        {
+            using (var curProcess = Process.GetCurrentProcess())
+            using (var curModule = curProcess.MainModule)
+            {
                 mouseHookId = WinApi.SetWindowsHookEx((int)HookType.WH_MOUSE_LL, MouseHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
             }
+        }
+
+        public static void UnhookMouse()
+        {
+            WinApi.UnhookWindowsHookEx(mouseHookId);
         }
 
         public static bool IsKeyPressed(KeyCode key)
@@ -67,6 +74,11 @@ namespace Clipt.Keyboards
             }
 
             if (KeyStrokeProcessor.Instance.ProcessKey(keyCode, isKeyDown))
+            {
+                return true;
+            }
+
+            if (HotKeyProcessor.Instance.ProcessKey(keyCode, isKeyDown))
             {
                 return true;
             }
