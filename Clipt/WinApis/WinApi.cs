@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using Clipt.Keyboards;
 
 namespace Clipt.WinApis
@@ -54,5 +55,29 @@ namespace Clipt.WinApis
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern uint MapVirtualKey(uint key, MapVirtualKeyType mapType);
+
+        [DllImport("user32.dll")]
+        internal static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
+
+        /// <summary>
+        /// Retrieves the identifier of the thread that created the specified window and, optionally, the identifier of the process that created the window.
+        /// </summary>
+        /// <param name="hWnd">The handle to the window</param>
+        /// <param name="lpdwProcessId">Writes the process id</param>
+        /// <returns>Thread id</returns>
+        [DllImport("user32.dll", SetLastError=true)]
+        internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("user32.dll", SetLastError=true)]
+        internal static extern int GetWindowText(IntPtr hwnd, [Out] StringBuilder buffer, int maxCount);
+
+        [DllImport("user32.dll", SetLastError=true)]
+        internal static extern bool IsWindowVisible(IntPtr hwnd);
+
+        [DllImport("user32.dll", SetLastError=true)]
+        internal static extern IntPtr SetActiveWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll", SetLastError=true)]
+        internal static extern bool SetForegroundWindow(IntPtr hwnd);
     }
 }

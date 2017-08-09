@@ -1,6 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using Clipt.Keyboards;
+using Clipt.WinApis;
 
 namespace Clipt
 {
@@ -35,6 +38,39 @@ namespace Clipt
                 Keyboard.SendKeyDown(KeyCode.Control);
                 Keyboard.SendKeyPress(KeyCode.End);
                 Keyboard.SendKeyUp(KeyCode.Control);
+            });
+
+            Keyboard.AddHotKey(new HotKey(KeyCode.OEM3, KeyCode.LeftMenu), _ =>
+            {
+                var activeWindow = WinApi.GetForegroundWindow();
+                var thread = WinApi.GetWindowThreadProcessId(activeWindow, out var processId);
+                IntPtr nextWindow = IntPtr.Zero;
+                IntPtr lastWindow = IntPtr.Zero;
+                WinApi.EnumThreadWindows(
+                    thread,
+                    (wnd, param) =>
+                    {
+                        if (!WinApi.IsWindowVisible(wnd))
+                            return true;
+
+                        if (nextWindow == IntPtr.Zero)
+                            nextWindow = wnd;
+
+                        var builder = new StringBuilder(255);
+                        WinApi.GetWindowText(wnd, builder, 255);
+                        Debug.WriteLine(builder);
+                        Debug.WriteLine(wnd);
+
+                        if (lastWindow == activeWindow)
+                        {
+                            WinApi.SetForegroundWindow(wnd);
+                            return false;
+                        }
+
+                        lastWindow = wnd;
+                        return true;
+                    },
+                    IntPtr.Zero);
             });
 
             Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));

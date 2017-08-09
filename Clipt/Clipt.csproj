@@ -85,6 +85,8 @@
     <Compile Include="TestScript.cs" />
     <Compile Include="TextTransforms\TrimIndentTransform.cs" />
     <Compile Include="Utils\BitUtils.cs" />
+    <Compile Include="WinApis\EnumThreadCallback.cs" />
+    <Compile Include="WinApis\EnumThreadDelegate.cs" />
     <Compile Include="WinApis\HardwareInput.cs" />
     <Compile Include="WinApis\Input.cs" />
     <Compile Include="WinApis\InputType.cs" />
