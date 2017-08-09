@@ -59,6 +59,9 @@ namespace Clipt.WinApis
         [DllImport("user32.dll")]
         internal static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
 
+        [DllImport("user32.dll")]
+        internal static extern bool EnumWindows(EnumThreadDelegate lpfn, IntPtr lParam);
+
         /// <summary>
         /// Retrieves the identifier of the thread that created the specified window and, optionally, the identifier of the process that created the window.
         /// </summary>
@@ -75,9 +78,23 @@ namespace Clipt.WinApis
         internal static extern bool IsWindowVisible(IntPtr hwnd);
 
         [DllImport("user32.dll", SetLastError=true)]
+        internal static extern bool IsWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll", SetLastError=true)]
         internal static extern IntPtr SetActiveWindow(IntPtr hwnd);
 
         [DllImport("user32.dll", SetLastError=true)]
         internal static extern bool SetForegroundWindow(IntPtr hwnd);
+
+        [DllImport("psapi.dll", SetLastError=true)]
+        internal static extern uint GetProcessImageFileName(uint processId, StringBuilder buffer, uint size);
+
+        public const int PROCESS_ALL_ACCESS = 0x1F0FFF;
+
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr OpenProcess(int access, uint inheritHandle, uint processId);
+
+        [DllImport("kernel32.dll")]
+        internal static extern bool CloseHandle(IntPtr hwnd);
     }
 }

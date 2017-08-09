@@ -9,6 +9,8 @@ namespace Clipt
 {
     public class TestScript : Script
     {
+        private static HotKeyHandler someHotKey = SomeHotKey;
+
         public override void Run()
         {
             EnableKeyboardHook();
@@ -40,26 +42,42 @@ namespace Clipt
                 Keyboard.SendKeyUp(KeyCode.Control);
             });
 
-            Keyboard.AddHotKey(new HotKey(KeyCode.OEM3, KeyCode.LeftMenu), _ =>
+            Keyboard.AddHotKey(new HotKey(KeyCode.OEM3, KeyCode.LeftMenu), hotKey =>
             {
                 var activeWindow = WinApi.GetForegroundWindow();
-                var thread = WinApi.GetWindowThreadProcessId(activeWindow, out var processId);
+                var activeThread = WinApi.GetWindowThreadProcessId(activeWindow, out var processId);
+                var ourProcess = Process.GetProcessById((int)processId);
+                var builder2 = new StringBuilder(255);
+                var result = WinApi.OpenProcess(WinApi.PROCESS_ALL_ACCESS, 0, processId);
+                WinApi.GetProcessImageFileName((uint)result, builder2, 255);
+                bool closed = WinApi.CloseHandle(result);
+                var ourProcessName = builder2.ToString();
+
                 IntPtr nextWindow = IntPtr.Zero;
                 IntPtr lastWindow = IntPtr.Zero;
-                WinApi.EnumThreadWindows(
-                    thread,
+                WinApi.EnumWindows(
                     (wnd, param) =>
                     {
-                        if (!WinApi.IsWindowVisible(wnd))
-                            return true;
-
-                        if (nextWindow == IntPtr.Zero)
-                            nextWindow = wnd;
-
+/*
                         var builder = new StringBuilder(255);
                         WinApi.GetWindowText(wnd, builder, 255);
                         Debug.WriteLine(builder);
                         Debug.WriteLine(wnd);
+*/
+
+                        if (!WinApi.IsWindowVisible(wnd))
+                            return true;
+
+                        WinApi.GetWindowThreadProcessId(wnd, out var newProcessId);
+
+                        var result2 = WinApi.OpenProcess(WinApi.PROCESS_ALL_ACCESS, 0, newProcessId);
+                        WinApi.GetProcessImageFileName((uint)result2, builder2, 255);
+                        bool closed2 = WinApi.CloseHandle(result2);
+
+                        if (builder2.ToString() != ourProcessName)
+                            return true;
+
+                        nextWindow = wnd;
 
                         if (lastWindow == activeWindow)
                         {
@@ -94,5 +112,9 @@ namespace Clipt
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Register(keys => Debug.WriteLine("Success"));
         }
 
+        private static void SomeHotKey(HotKey hotKey)
+        {
+
+        }
     }
 }
