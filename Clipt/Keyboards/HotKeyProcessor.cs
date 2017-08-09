@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Clipt.Keyboards
 {
@@ -9,7 +10,7 @@ namespace Clipt.Keyboards
         private readonly Dictionary<KeyCode, List<HotKey>> hotKeysByActivator = new Dictionary<KeyCode, List<HotKey>>();
         private readonly Dictionary<HotKey, HotKeyHandler> handlersByHotKey = new Dictionary<HotKey, HotKeyHandler>();
 
-        private KeyCode? ignoredKey;
+        private ImmutableHashSet<KeyCode> ignoredKeyUps = ImmutableHashSet<KeyCode>.Empty;
 
         public void Register(HotKey hotKey, HotKeyHandler handler)
         {
@@ -45,11 +46,11 @@ namespace Clipt.Keyboards
                 return ProcessKeyUp(keyCode);
         }
 
-        private bool ProcessKeyUp(KeyCode keyCode)
+        private bool ProcessKeyUp(KeyCode key)
         {
-            if (ignoredKey == keyCode)
+            if (ignoredKeyUps.Contains(key))
             {
-                ignoredKey = null;
+                ignoredKeyUps = ignoredKeyUps.Remove(key);
                 return true;
             }
             return false;
@@ -63,7 +64,7 @@ namespace Clipt.Keyboards
                 {
                     if (hotKey.Process(keyCode))
                     {
-                        ignoredKey = keyCode;
+                        ignoredKeyUps = hotKey.Modifiers.Add(keyCode).ToImmutableHashSet();
                         var handler = handlersByHotKey[hotKey];
                         handler(hotKey);
                         return true;
