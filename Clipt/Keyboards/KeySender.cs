@@ -91,7 +91,6 @@ namespace Clipt.Keyboards
                     break;
             }
             input.Data.Mouse = mouseInput;
-            Debug.WriteLine(input.Data.Mouse.Flags);
 
             return input;
         }

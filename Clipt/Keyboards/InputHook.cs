@@ -83,7 +83,6 @@ namespace Clipt.Keyboards
                 return true;
             }
 
-            Debug.WriteLine($"Not processed: {keyCode}, isKeyDown: {isKeyDown}, isKeyUp: {isKeyUp}, isInjected: {isInjected}");
             return false;
         }
 
@@ -167,7 +166,6 @@ namespace Clipt.Keyboards
                         Debug.WriteLine($"vkCode: {keyCode}, injected: {isInjected}");
                     }
 
-//                    return new IntPtr(1);
                     break;
             }
 

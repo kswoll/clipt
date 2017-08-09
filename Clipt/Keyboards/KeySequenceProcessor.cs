@@ -20,7 +20,6 @@ namespace Clipt.Keyboards
                 return false;
             }
 
-            Debug.WriteLine($"key: {key}, isShiftDown: {isShiftDown}");
             var trigger = new KeyData(key, isShiftDown);
             foreach (var branch in activeBranches.Add(root))
             {

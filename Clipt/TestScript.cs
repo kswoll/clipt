@@ -38,6 +38,9 @@ namespace Clipt
             });
 
             Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));
+            Keyboard.AddHotKey(new HotKey(KeyCode.Right, KeyCode.F24), new KeyStroke(KeyCode.End));
+            Keyboard.AddHotKey(new HotKey(KeyCode.Up, KeyCode.F24), new KeyStroke(KeyCode.Prior));
+            Keyboard.AddHotKey(new HotKey(KeyCode.Down, KeyCode.F24), new KeyStroke(KeyCode.Next));
 
 //            Keyboard.ReplaceKey(KeyCode.N1, KeyCode.N2);
 //            Keyboard.ReplaceKey(KeyCode.N2, KeyCode.RightButton);

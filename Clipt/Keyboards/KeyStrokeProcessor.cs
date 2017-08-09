@@ -26,7 +26,6 @@ namespace Clipt.Keyboards
 
         public bool ProcessKeyUp(KeyCode key)
         {
-            Debug.WriteLine($"StrokeUp: {key}, {ignoredKeyUps.Contains(key)}");
             if (ignoredKeyUps.Contains(key))
             {
                 ignoredKeyUps = ignoredKeyUps.Remove(key);
@@ -44,7 +43,6 @@ namespace Clipt.Keyboards
                 {
                     if (keyStroke.ProcessKey(activeKeys))
                     {
-                        Debug.WriteLine($"ActiveKeys: {activeKeys.Count}");
                         var handler = handlersByKeyStroke[keyStroke];
 
                         ignoredKeyUps = activeKeys;
@@ -58,7 +56,6 @@ namespace Clipt.Keyboards
                         }
                         finally
                         {
-                            Debug.WriteLine($"Activated.  Ignored: {ignoredKeyUps.Count}, Active: {activeKeys.Count}");
                             activeKeys = ImmutableHashSet<KeyCode>.Empty;
                         }
                         return true;
@@ -67,7 +64,6 @@ namespace Clipt.Keyboards
             }
             else
             {
-                Debug.WriteLine("Emptying active keys");
                 activeKeys = ImmutableHashSet<KeyCode>.Empty;
             }
             return false;
