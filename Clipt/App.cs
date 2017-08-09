@@ -23,14 +23,14 @@ namespace Clipt
         {
             var app = new App();
 
-            KeyboardHook.Hook();
+            InputHook.Hook();
             try
             {
                 app.Run();
             }
             finally
             {
-                KeyboardHook.Unhook();
+                InputHook.Unhook();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Clipt.Keyboards
@@ -12,9 +13,29 @@ namespace Clipt.Keyboards
         private readonly Dictionary<KeyCode, ImmutableList<KeyStroke>> keyStrokesByKey = new Dictionary<KeyCode, ImmutableList<KeyStroke>>();
 
         private ImmutableHashSet<KeyCode> activeKeys = ImmutableHashSet<KeyCode>.Empty;
+        private ImmutableHashSet<KeyCode> ignoredKeyUps = ImmutableHashSet<KeyCode>.Empty;
         private ImmutableDictionary<KeyStroke, KeyStrokeHandler> handlersByKeyStroke = ImmutableDictionary<KeyStroke, KeyStrokeHandler>.Empty;
 
-        public bool ProcessKey(KeyCode key)
+        public bool ProcessKey(KeyCode key, bool isKeyDown)
+        {
+            if (isKeyDown)
+                return ProcessKeyDown(key);
+            else
+                return ProcessKeyUp(key);
+        }
+
+        public bool ProcessKeyUp(KeyCode key)
+        {
+            Debug.WriteLine($"StrokeUp: {key}, {ignoredKeyUps.Contains(key)}");
+            if (ignoredKeyUps.Contains(key))
+            {
+                ignoredKeyUps = ignoredKeyUps.Remove(key);
+                return true;
+            }
+            return false;
+        }
+
+        public bool ProcessKeyDown(KeyCode key)
         {
             if (keyStrokesByKey.TryGetValue(key, out var keyStrokes))
             {
@@ -23,8 +44,10 @@ namespace Clipt.Keyboards
                 {
                     if (keyStroke.ProcessKey(activeKeys))
                     {
+                        Debug.WriteLine($"ActiveKeys: {activeKeys.Count}");
                         var handler = handlersByKeyStroke[keyStroke];
 
+                        ignoredKeyUps = activeKeys;
                         try
                         {
                             handler(keyStroke);
@@ -35,6 +58,7 @@ namespace Clipt.Keyboards
                         }
                         finally
                         {
+                            Debug.WriteLine($"Activated.  Ignored: {ignoredKeyUps.Count}, Active: {activeKeys.Count}");
                             activeKeys = ImmutableHashSet<KeyCode>.Empty;
                         }
                         return true;
@@ -43,6 +67,7 @@ namespace Clipt.Keyboards
             }
             else
             {
+                Debug.WriteLine("Emptying active keys");
                 activeKeys = ImmutableHashSet<KeyCode>.Empty;
             }
             return false;
@@ -63,6 +88,21 @@ namespace Clipt.Keyboards
             }
 
             handlersByKeyStroke = handlersByKeyStroke.SetItem(keyStroke, handler);
+        }
+
+        public void Register(KeyStroke keyStroke, KeyStroke replacement)
+        {
+            Register(keyStroke, _ =>
+            {
+                for (var i = 0; i < replacement.Count; i++)
+                {
+                    KeySender.SendKeyDown(replacement[i]);
+                }
+                for (var i = replacement.Count - 1; i >= 0; i--)
+                {
+                    KeySender.SendKeyUp(replacement[i]);
+                }
+            });
         }
     }
 }

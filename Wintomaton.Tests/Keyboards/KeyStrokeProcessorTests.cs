@@ -13,7 +13,7 @@ namespace Wintomaton.Tests.Keyboards
             var keyStroke = new KeyStroke(KeyCode.A);
             KeyStroke? stroke = null;
             processor.Register(keyStroke, x => stroke = x);
-            processor.ProcessKey(KeyCode.A);
+            processor.ProcessKey(KeyCode.A, true);
 
             Assert.IsNotNull(stroke);
         }
@@ -25,8 +25,8 @@ namespace Wintomaton.Tests.Keyboards
             var keyStroke = new KeyStroke(KeyCode.A, KeyCode.Control);
             KeyStroke? stroke = null;
             processor.Register(keyStroke, x => stroke = x);
-            processor.ProcessKey(KeyCode.Control);
-            processor.ProcessKey(KeyCode.A);
+            processor.ProcessKey(KeyCode.Control, true);
+            processor.ProcessKey(KeyCode.A, true);
 
             Assert.IsNotNull(stroke);
         }

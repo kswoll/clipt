@@ -3,7 +3,7 @@
 namespace Clipt.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct HARDWAREINPUT
+    internal struct HardwareInput
     {
         public uint Msg;
         public ushort ParamL;

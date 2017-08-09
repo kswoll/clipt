@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 namespace Clipt.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct KEYBDINPUT
+    internal struct KeyboardInput
     {
         public ushort Vk;
         public ushort Scan;
-        public KEYEVENTF Flags;
+        public KeyEvent Flags;
         public uint Time;
         public IntPtr ExtraInfo;
     }

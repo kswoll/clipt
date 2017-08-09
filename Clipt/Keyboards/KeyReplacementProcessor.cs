@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using Clipt.WinApis;
 
 namespace Clipt.Keyboards
 {
@@ -13,21 +14,21 @@ namespace Clipt.Keyboards
             replacements = replacements.SetItem(key, replacement);
         }
 
-        public bool ProcessKeyDown(KeyCode key)
+        public bool ProcessKeyDown(KeyCode key, MousePoint? point)
         {
             if (replacements.TryGetValue(key, out var replacement))
             {
-                KeySender.SendKeyDown(replacement);
+                KeySender.SendKeyDown(replacement, point: replacement.IsMouseKey() ? (point ?? new MousePoint()) : (MousePoint?)null);
                 return true;
             }
             return false;
         }
 
-        public bool ProcessKeyUp(KeyCode key)
+        public bool ProcessKeyUp(KeyCode key, MousePoint? point)
         {
             if (replacements.TryGetValue(key, out var replacement))
             {
-                KeySender.SendKeyUp(replacement);
+                KeySender.SendKeyUp(replacement, point: replacement.IsMouseKey() ? (point ?? new MousePoint()) : (MousePoint?)null);
                 return true;
             }
             return false;

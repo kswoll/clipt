@@ -16,7 +16,11 @@ namespace Clipt.Keyboards
         public void RegisterSequence(KeySequence sequence, string substitution) => sequence.Substitute(substitution);
 
         public void RegisterStroke(KeyStroke keyStroke, KeyStrokeHandler handler) => KeyStrokeProcessor.Instance.Register(keyStroke, handler);
+        public void RegisterStroke(KeyStroke keyStroke, KeyStroke replacement) => KeyStrokeProcessor.Instance.Register(keyStroke, replacement);
 
         public void ReplaceKey(KeyCode key, KeyCode replacement) => KeyReplacementProcessor.Instance.Register(key, replacement);
+
+        public static bool IsKeyPressed(KeyCode key) => InputHook.IsKeyPressed(key);
+        public static bool IsKeyToggled(KeyCode key) => InputHook.IsKeyToggled(key);
     }
 }

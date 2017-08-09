@@ -22,7 +22,7 @@ namespace Clipt.WinApis
         internal static extern bool UnregisterHotKey([In] IntPtr hWnd, [In] int id);
 
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern uint SendInput(uint numberOfInputs, INPUT[] inputs, int sizeOfInputStructure);
+        internal static extern uint SendInput(uint numberOfInputs, Input[] inputs, int sizeOfInputStructure);
 
         [DllImport("user32.dll")]
         internal static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
@@ -34,7 +34,7 @@ namespace Clipt.WinApis
         internal static extern IntPtr GetModuleHandle(string moduleName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelHookProc lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

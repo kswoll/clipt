@@ -4,12 +4,11 @@ using System.Runtime.InteropServices;
 namespace Clipt.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct MouseInput
+    public struct MouseLowLevelHookStruct
     {
-        public int X;
-        public int Y;
-        public uint MouseData;
-        public MouseEvent Flags;
+        public MousePoint Point;
+        public MouseData MouseData;
+        public MouseLowLevelHookStructFlags Flags;
         public uint Time;
         public IntPtr ExtraInfo;
     }

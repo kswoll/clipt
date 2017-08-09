@@ -3,9 +3,9 @@
 namespace Clipt.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Input
+    public struct MousePoint
     {
-        public InputType Type;
-        public MouseKeyboardHardwareInput Data;
+        public int X;
+        public int Y;
     }
 }
