@@ -69,9 +69,40 @@ namespace Clipt.Keyboards
                     break;
             }
 
+            bool isShiftDown = IsKeyPressed(KeyCode.LeftShift) || IsKeyPressed(KeyCode.RightShift);
+            var isExtended = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_EXTENDED) != 0;
+            var isInjected = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_INJECTED) != 0;
+            var isKeyDown = message == WindowMessage.WM_KEYDOWN || message == WindowMessage.WM_SYSKEYDOWN;
+            var isKeyUp = message == WindowMessage.WM_KEYUP || message == WindowMessage.WM_SYSKEYUP;
+
+            if (nCode >= 0 && (isKeyDown || isKeyUp) && !isInjected)
+            {
+                if (isKeyDown)
+                {
+                    if (KeyReplacementProcessor.Instance.ProcessKeyDown(keyCode))
+                    {
+                        return new IntPtr(1);
+                    }
+                }
+                else
+                {
+                    if (KeyReplacementProcessor.Instance.ProcessKeyUp(keyCode))
+                    {
+                        return new IntPtr(1);
+                    }
+                }
+            }
+
+            if (nCode >= 0 && isKeyDown)
+            {
+                if (KeyStrokeProcessor.Instance.ProcessKey(keyCode))
+                {
+                    return new IntPtr(1);
+                }
+            }
+
             if (nCode >= 0 && message == WindowMessage.WM_KEYDOWN)
             {
-                bool isShiftDown = IsKeyPressed(KeyCode.LeftShift) || IsKeyPressed(KeyCode.RightShift);
                 if (KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown))
                 {
                     return new IntPtr(1);
@@ -80,9 +111,7 @@ namespace Clipt.Keyboards
 
             if (nCode >= 0 && (message == WindowMessage.WM_KEYDOWN || message == WindowMessage.WM_SYSKEYDOWN || (message == WindowMessage.WM_IME_KEYDOWN)))
             {
-                var isExtended = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_EXTENDED) != 0;
-                var isInjected = (keyboardData.flags & KeyboardLowLevelHookStructFlags.LLKHF_INJECTED) != 0;
-                var keyData = new KeyData(keyCode, keyboardData.scanCode, isExtended, isInjected);
+//                var keyData = new KeyData(keyCode, keyboardData.scanCode, isExtended, isInjected);
 //                var vkCode = (KeyCode)Marshal.ReadInt32(lParam);
 
 //                if (vkCode == KeyCode.Packet)

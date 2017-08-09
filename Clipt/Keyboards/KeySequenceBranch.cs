@@ -6,15 +6,15 @@ namespace Clipt.Keyboards
 {
     public class KeySequenceBranch : IKeySequenceNode
     {
-        private readonly Dictionary<KeyTrigger, IKeySequenceNode> nodes = new Dictionary<KeyTrigger, IKeySequenceNode>();
-        private readonly ImmutableList<KeyTrigger> prelude;
+        private readonly Dictionary<KeyData, IKeySequenceNode> nodes = new Dictionary<KeyData, IKeySequenceNode>();
+        private readonly ImmutableList<KeyData> prelude;
 
-        public KeySequenceBranch(ImmutableList<KeyTrigger> prelude)
+        public KeySequenceBranch(ImmutableList<KeyData> prelude)
         {
             this.prelude = prelude;
         }
 
-        public KeySequenceBranchResult Process(KeyTrigger key, out KeySequenceBranch next)
+        public KeySequenceBranchResult Process(KeyData key, out KeySequenceBranch next)
         {
             if (nodes.TryGetValue(key, out var node))
             {

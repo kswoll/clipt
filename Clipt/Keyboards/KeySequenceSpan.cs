@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Clipt.Keyboards
 {
-    public struct KeySequenceSpan : IEnumerable<KeyTrigger>
+    public struct KeySequenceSpan : IEnumerable<KeyData>
     {
         public KeySequence Sequence { get; }
         public int StartIndex { get; }
         public int EndIndex { get; }
 
-        public KeyTrigger Trigger => Sequence[StartIndex];
+        public KeyData Trigger => Sequence[StartIndex];
         public bool IsTerminal => StartIndex == EndIndex - 1;
         public KeySequenceSpan Next => new KeySequenceSpan(Sequence, StartIndex + 1, EndIndex);
         public KeySequenceSpan Prefix => new KeySequenceSpan(Sequence, 0, StartIndex + 1);
@@ -34,7 +34,7 @@ namespace Clipt.Keyboards
             return GetEnumerator();
         }
 
-        public IEnumerator<KeyTrigger> GetEnumerator()
+        public IEnumerator<KeyData> GetEnumerator()
         {
             for (var i = StartIndex; i < EndIndex; i++)
             {

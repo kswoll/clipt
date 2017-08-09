@@ -12,7 +12,11 @@ namespace Clipt.Keyboards
         public void SendKeyDown(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyDown(keyCode, scanCode);
         public void SendKeyUp(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyUp(keyCode, scanCode);
 
-        public void RegisterKeySequence
-        public void RegisterKeyStroke
+        public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler) => KeySequenceProcessor.Instance.RegisterSequence(sequence, handler);
+        public void RegisterSequence(KeySequence sequence, string substitution) => sequence.Substitute(substitution);
+
+        public void RegisterStroke(KeyStroke keyStroke, KeyStrokeHandler handler) => KeyStrokeProcessor.Instance.Register(keyStroke, handler);
+
+        public void ReplaceKey(KeyCode key, KeyCode replacement) => KeyReplacementProcessor.Instance.Register(key, replacement);
     }
 }

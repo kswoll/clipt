@@ -8,7 +8,7 @@ namespace Clipt.Keyboards
     {
         public static KeySequenceProcessor Instance { get; } = new KeySequenceProcessor();
 
-        private readonly KeySequenceBranch root = new KeySequenceBranch(ImmutableList<KeyTrigger>.Empty);
+        private readonly KeySequenceBranch root = new KeySequenceBranch(ImmutableList<KeyData>.Empty);
 
         private ImmutableList<KeySequenceBranch> activeBranches = ImmutableList<KeySequenceBranch>.Empty;
 
@@ -21,7 +21,7 @@ namespace Clipt.Keyboards
             }
 
             Debug.WriteLine($"key: {key}, isShiftDown: {isShiftDown}");
-            var trigger = new KeyTrigger(key, isShiftDown);
+            var trigger = new KeyData(key, isShiftDown);
             foreach (var branch in activeBranches.Add(root))
             {
                 switch (branch.Process(trigger, out var newBranch))

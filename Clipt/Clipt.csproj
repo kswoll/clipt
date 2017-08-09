@@ -63,6 +63,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Keyboards\KeyReplacementProcessor.cs" />
     <Compile Include="Keyboards\KeyStrokeHandler.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Keyboards\KeyboardUtils.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="App.cs" />
     <Compile Include="Keyboards\IKeySequenceNode.cs" />
     <Compile Include="Keyboards\KeyboardHook.cs" />
-    <Compile Include="Keyboards\KeyData.cs" />
     <Compile Include="Keyboards\KeySender.cs" />
     <Compile Include="Keyboards\HotKey.cs" />
     <Compile Include="Keyboards\KeySequenceBranchResult.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="Keyboards\KeySequenceHandlerNode.cs" />
     <Compile Include="Keyboards\KeySequenceProcessor.cs" />
     <Compile Include="Keyboards\KeySequenceSpan.cs" />
-    <Compile Include="Keyboards\KeyTrigger.cs" />
+    <Compile Include="Keyboards\KeyData.cs" />
     <Compile Include="Keyboards\ModifierKeys.cs" />
     <Compile Include="Keyboards\SequenceAlreadyRegisteredException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

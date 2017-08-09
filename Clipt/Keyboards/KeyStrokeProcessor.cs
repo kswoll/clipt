@@ -37,7 +37,7 @@ namespace Clipt.Keyboards
                         {
                             activeKeys = ImmutableHashSet<KeyCode>.Empty;
                         }
-                        break;
+                        return true;
                     }
                 }
             }

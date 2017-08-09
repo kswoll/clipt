@@ -6,20 +6,20 @@ using Clipt.WinApis;
 
 namespace Clipt.Keyboards
 {
-    public class KeySequence : IEnumerable<KeyTrigger>
+    public class KeySequence : IEnumerable<KeyData>
     {
         public int Count => keys.Count;
-        public KeyTrigger this[int index] => keys[index];
+        public KeyData this[int index] => keys[index];
         public KeySequenceSpan Start => new KeySequenceSpan(this, 0, Count);
         public void Register(KeySequenceHandler handler) => KeySequenceProcessor.Instance.RegisterSequence(this, handler);
 
-        private readonly IReadOnlyList<KeyTrigger> keys;
+        private readonly IReadOnlyList<KeyData> keys;
 
-        public KeySequence(params KeyTrigger[] keys) : this((IEnumerable<KeyTrigger>)keys)
+        public KeySequence(params KeyData[] keys) : this((IEnumerable<KeyData>)keys)
         {
         }
 
-        public KeySequence(IEnumerable<KeyTrigger> keys)
+        public KeySequence(IEnumerable<KeyData> keys)
         {
             this.keys = keys.ToArray();
             if (this.keys.Count == 0)
@@ -28,7 +28,7 @@ namespace Clipt.Keyboards
 
         public static KeySequence FromString(string input)
         {
-            return new KeySequence(input.Select(x => WinApi.VkKeyScan(x)).Select(x => new KeyTrigger(x.Key, x.Modifiers.HasFlag(VkKeyScanModifierKeys.Shift))));
+            return new KeySequence(input.Select(x => WinApi.VkKeyScan(x)).Select(x => new KeyData(x.Key, x.Modifiers.HasFlag(VkKeyScanModifierKeys.Shift))));
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -36,7 +36,7 @@ namespace Clipt.Keyboards
             return GetEnumerator();
         }
 
-        public IEnumerator<KeyTrigger> GetEnumerator()
+        public IEnumerator<KeyData> GetEnumerator()
         {
             return keys.GetEnumerator();
         }
