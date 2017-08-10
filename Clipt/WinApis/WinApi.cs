@@ -87,7 +87,7 @@ namespace Clipt.WinApis
         internal static extern bool SetForegroundWindow(IntPtr hwnd);
 
         [DllImport("psapi.dll", SetLastError=true)]
-        internal static extern uint GetProcessImageFileName(uint processId, StringBuilder buffer, uint size);
+        internal static extern uint GetProcessImageFileName(IntPtr processHandle, StringBuilder buffer, uint size);
 
         public const int PROCESS_ALL_ACCESS = 0x1F0FFF;
 

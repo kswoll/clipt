@@ -71,6 +71,7 @@
     <Compile Include="Keyboards\Shortcut.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Keyboards\KeyboardUtils.cs" />
+    <Compile Include="Utils\ProcessUtils.cs" />
     <Compile Include="Utils\TextUtils.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Keyboards\IKeySequenceNode.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="TestScript.cs" />
     <Compile Include="TextTransforms\TrimIndentTransform.cs" />
     <Compile Include="Utils\BitUtils.cs" />
+    <Compile Include="Utils\WindowUtils.cs" />
     <Compile Include="WinApis\EnumThreadCallback.cs" />
     <Compile Include="WinApis\EnumThreadDelegate.cs" />
     <Compile Include="WinApis\HardwareInput.cs" />
@@ -150,7 +152,9 @@
   <ItemGroup>
     <Resource Include="Assets\Wintomaton.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Windows\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

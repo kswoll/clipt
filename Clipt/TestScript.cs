@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using Clipt.Keyboards;
 using Clipt.WinApis;
 
@@ -45,50 +42,8 @@ namespace Clipt
             Keyboard.AddHotKey(new HotKey(KeyCode.OEM3, KeyCode.LeftMenu), hotKey =>
             {
                 var activeWindow = WinApi.GetForegroundWindow();
-                var activeThread = WinApi.GetWindowThreadProcessId(activeWindow, out var processId);
-                var ourProcess = Process.GetProcessById((int)processId);
-                var builder2 = new StringBuilder(255);
-                var result = WinApi.OpenProcess(WinApi.PROCESS_ALL_ACCESS, 0, processId);
-                WinApi.GetProcessImageFileName((uint)result, builder2, 255);
-                bool closed = WinApi.CloseHandle(result);
-                var ourProcessName = builder2.ToString();
-
-                IntPtr nextWindow = IntPtr.Zero;
-                IntPtr lastWindow = IntPtr.Zero;
-                WinApi.EnumWindows(
-                    (wnd, param) =>
-                    {
-/*
-                        var builder = new StringBuilder(255);
-                        WinApi.GetWindowText(wnd, builder, 255);
-                        Debug.WriteLine(builder);
-                        Debug.WriteLine(wnd);
-*/
-
-                        if (!WinApi.IsWindowVisible(wnd))
-                            return true;
-
-                        WinApi.GetWindowThreadProcessId(wnd, out var newProcessId);
-
-                        var result2 = WinApi.OpenProcess(WinApi.PROCESS_ALL_ACCESS, 0, newProcessId);
-                        WinApi.GetProcessImageFileName((uint)result2, builder2, 255);
-                        bool closed2 = WinApi.CloseHandle(result2);
-
-                        if (builder2.ToString() != ourProcessName)
-                            return true;
-
-                        nextWindow = wnd;
-
-                        if (lastWindow == activeWindow)
-                        {
-                            WinApi.SetForegroundWindow(wnd);
-                            return false;
-                        }
-
-                        lastWindow = wnd;
-                        return true;
-                    },
-                    IntPtr.Zero);
+                var windows = Windows.GetVisibleWindowsWithSameProcess(activeWindow);
+                Windows.ActivateNextWindow(windows, activeWindow);
             });
 
             Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));

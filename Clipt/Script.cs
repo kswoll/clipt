@@ -11,9 +11,16 @@ namespace Clipt
         public ClipboardUtils Clipboard { get; } = new ClipboardUtils();
         public TextUtils Text { get; } = new TextUtils();
         public KeyboardUtils Keyboard { get; } = new KeyboardUtils();
+        public WindowUtils Windows { get; }
+        public ProcessUtils Processes { get; } = new ProcessUtils();
 
         private bool isKeyboardHookEnabled;
         private bool isMouseHookEnabled;
+
+        protected Script()
+        {
+            Windows = new WindowUtils(this);
+        }
 
         protected void EnableKeyboardHook()
         {
