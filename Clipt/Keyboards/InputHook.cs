@@ -56,32 +56,22 @@ namespace Clipt.Keyboards
         private static bool ProcessKey(KeyCode keyCode, bool isKeyDown, bool isKeyUp, bool isInjected, MousePoint? point)
         {
             if ((isKeyDown || isKeyUp) && !isInjected)
-            {
                 if (isKeyDown)
                 {
                     if (KeyReplacementProcessor.Instance.ProcessKeyDown(keyCode, point))
-                    {
                         return true;
-                    }
                 }
                 else
                 {
                     if (KeyReplacementProcessor.Instance.ProcessKeyUp(keyCode, point))
-                    {
                         return true;
-                    }
                 }
-            }
 
             if (KeyStrokeProcessor.Instance.ProcessKey(keyCode, isKeyDown))
-            {
                 return true;
-            }
 
             if (HotKeyProcessor.Instance.ProcessKey(keyCode, isKeyDown))
-            {
                 return true;
-            }
 
             return false;
         }
@@ -124,17 +114,11 @@ namespace Clipt.Keyboards
                 return new IntPtr(1);
 
             if (message == WindowMessage.WM_KEYDOWN)
-            {
                 if (KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown))
-                {
                     return new IntPtr(1);
-                }
-            }
 
             if (isKeyDown)
-            {
                 Debug.WriteLine($"vkCode: {keyCode}, scanCode: {keyboardData.scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
-            }
 
             return WinApi.CallNextHookEx(keyboardHookId, nCode, wParam, lParam);
         }
@@ -162,9 +146,7 @@ namespace Clipt.Keyboards
                         return new IntPtr(1);
 
                     if (isKeyDown)
-                    {
                         Debug.WriteLine($"vkCode: {keyCode}, injected: {isInjected}");
-                    }
 
                     break;
             }
