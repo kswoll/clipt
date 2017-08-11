@@ -12,6 +12,8 @@ namespace Clipt
         {
             EnableKeyboardHook();
 
+            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
+
             Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
             {
                 var text = System.Windows.Clipboard.GetText();

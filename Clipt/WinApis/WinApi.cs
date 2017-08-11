@@ -26,10 +26,10 @@ namespace Clipt.WinApis
         internal static extern uint SendInput(uint numberOfInputs, Input[] inputs, int sizeOfInputStructure);
 
         [DllImport("user32.dll")]
-        internal static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr GetModuleHandle(string moduleName);
@@ -96,5 +96,11 @@ namespace Clipt.WinApis
 
         [DllImport("kernel32.dll")]
         internal static extern bool CloseHandle(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
     }
 }

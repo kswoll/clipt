@@ -4,8 +4,8 @@ namespace Clipt.Keyboards
 {
     public class KeyboardUtils
     {
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler) => Shortcut.AddShortcut(modifiers, key, handler);
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler) => Shortcut.AddShortcut(modifiers, key, handler);
+        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler) => Shortcut.Instance.AddShortcut(modifiers, key, handler);
+        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler) => Shortcut.Instance.AddShortcut(modifiers, key, handler);
 
         public void AddHotKey(HotKey hotKey, HotKeyHandler handler) => HotKeyProcessor.Instance.Register(hotKey, handler);
         public void AddHotKey(HotKey hotKey, KeyStroke replacement) => HotKeyProcessor.Instance.Register(hotKey, replacement);

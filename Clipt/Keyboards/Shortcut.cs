@@ -1,98 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
 using Clipt.WinApis;
+using Clipt.Windows;
 
 namespace Clipt.Keyboards
 {
-    public class Shortcut
+    public class Shortcut : IMessageReceiver
     {
-        private static readonly KeyboardWindow window = new KeyboardWindow();
+        public static Shortcut Instance { get; } = new Shortcut();
 
-        public static void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
+        private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
+
+        private IntPtr hwnd;
+        private int nextHotKeyId = 9000;
+
+        public Shortcut()
         {
-            window.RegisterHotKey(modifiers, key, handler);
+            MessageReceiverWindow.Instance.RegisterReceiver(this);
         }
 
-        public static void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
+        public void Attach(IntPtr hwnd)
         {
-            window.RegisterHotKey(modifiers, key, () =>
+            this.hwnd = hwnd;
+        }
+
+        public void Detach(IntPtr hwnd)
+        {
+            this.hwnd = IntPtr.Zero;
+
+            foreach (var id in handlers.Keys)
+            {
+                WinApi.UnregisterHotKey(hwnd, id);
+            }
+        }
+
+        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
+        {
+            if (!WinApi.RegisterHotKey(hwnd, nextHotKeyId, modifiers, (uint)key))
+            {
+                var error = Marshal.GetLastWin32Error();
+                throw new Exception($"Unable to register hotkey: {error}");
+            }
+            else
+            {
+                handlers[nextHotKeyId] = handler;
+                nextHotKeyId++;
+            }
+        }
+
+        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
+        {
+            AddShortcut(modifiers, key, () =>
             {
                 handler();
                 return true;
             });
         }
 
-        /// <summary>
-        /// Represents the window that is used internally to get the messages.
-        /// </summary>
-        private class KeyboardWindow : Window
+        public void HandleMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
-            private readonly WindowInteropHelper interop;
-
-            private HwndSource source;
-            private int nextHotKeyId = 9000;
-
-            public KeyboardWindow()
+            switch (message)
             {
-                interop = new WindowInteropHelper(this);
-                interop.EnsureHandle();
-            }
-
-            protected override void OnSourceInitialized(EventArgs e)
-            {
-                base.OnSourceInitialized(e);
-
-                source = HwndSource.FromHwnd(interop.Handle);
-                source.AddHook(HwndHook);
-            }
-
-            protected override void OnClosed(EventArgs e)
-            {
-                base.OnClosed(e);
-
-                source.RemoveHook(HwndHook);
-                UnregisterHotKeys();
-            }
-
-            public void RegisterHotKey(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
-            {
-                if (!WinApi.RegisterHotKey(interop.Handle, nextHotKeyId, modifiers, (uint)key))
-                {
-                    var error = Marshal.GetLastWin32Error();
-                    throw new Exception($"Unable to register hotkey: {error}");
-                }
-                else
-                {
-                    handlers[nextHotKeyId] = handler;
-                    nextHotKeyId++;
-                }
-            }
-
-            private void UnregisterHotKeys()
-            {
-                var helper = new WindowInteropHelper(this);
-                foreach (var id in handlers.Keys)
-                {
-                    WinApi.UnregisterHotKey(helper.Handle, id);
-                }
-            }
-
-            private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-            {
-                const int wmHotkey = 0x0312;
-
-                switch (msg)
-                {
-                    case wmHotkey:
-                        var handler = handlers[wParam.ToInt32()];
-                        handled = handler();
-                        break;
-                }
-                return IntPtr.Zero;
+                case WindowMessage.WM_HOTKEY:
+                    var handler = handlers[wParam.ToInt32()];
+                    handled = handler();
+                    break;
             }
         }
     }
