@@ -13,6 +13,7 @@ namespace Clipt
         public KeyboardUtils Keyboard { get; } = new KeyboardUtils();
         public WindowUtils Windows { get; }
         public ProcessUtils Processes { get; } = new ProcessUtils();
+        public TrayUtils Tray { get; } = new TrayUtils();
 
         private bool isKeyboardHookEnabled;
         private bool isMouseHookEnabled;

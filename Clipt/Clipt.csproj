@@ -169,6 +169,7 @@
     <Compile Include="TestScript.cs" />
     <Compile Include="TextTransforms\TrimIndentTransform.cs" />
     <Compile Include="Utils\BitUtils.cs" />
+    <Compile Include="Utils\TrayUtils.cs" />
     <Compile Include="Utils\WindowUtils.cs" />
     <Compile Include="WinApis\EnumThreadCallback.cs" />
     <Compile Include="WinApis\EnumThreadDelegate.cs" />

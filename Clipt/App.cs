@@ -3,17 +3,15 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Clipt.Keyboards;
 using Hardcodet.Wpf.TaskbarNotification;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 
 namespace Clipt
 {
     public class App : Application
     {
-        private static TaskbarIcon notifyIcon;
-        private static Script script;
+        public static App Instance { get; private set; }
+
+        public TaskbarIcon TrayIcon { get; private set; }
 
         /// <summary>
         /// Application Entry Point.
@@ -22,16 +20,8 @@ namespace Clipt
         [DebuggerNonUserCode]
         public static void Main()
         {
-            var app = new App();
-
-            try
-            {
-                app.Run();
-            }
-            finally
-            {
-                ((IDisposable)script)?.Dispose();
-            }
+            Instance = new App();
+            Instance.Run();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -44,12 +34,14 @@ namespace Clipt
             logo.EndInit();
 
             var contextMenu = new ContextMenu();
-            contextMenu.Items.Add(new MenuItem
+            var exitMenuItem = new MenuItem
             {
-                Header = "Test"
-            });
+                Header = "Exit"
+            };
+            exitMenuItem.Click += (sender, args) => Shutdown();
+            contextMenu.Items.Add(exitMenuItem);
 
-            notifyIcon = new TaskbarIcon
+            TrayIcon = new TaskbarIcon
             {
                 IconSource = logo,
                 ToolTipText = "Wintomaton",
@@ -58,6 +50,7 @@ namespace Clipt
 
 //            notifyIcon.ShowBalloonTip("Title", "Content", BalloonIcon.Error);
 
+/*
             var testScript = CSharpScript.Create(@"
 public class MyScript : Script
 {
@@ -68,9 +61,12 @@ public class MyScript : Script
 }
 new MyScript().Run();
 ", ScriptOptions.Default.WithImports("Clipt", "System.Windows").AddReferences(typeof(Script).Assembly)).RunAsync();
+*/
 
-//            script = new TestScript();
-//            script.Run();
+            using (var script = new TestScript())
+            {
+                script.Run();
+            }
         }
     }
 }

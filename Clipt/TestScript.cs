@@ -1,18 +1,18 @@
 ﻿using System.Windows;
 using Clipt.Keyboards;
 using Clipt.WinApis;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Clipt
 {
     public class TestScript : Script
     {
-        private static HotKeyHandler someHotKey = SomeHotKey;
-
         public override void Run()
         {
             EnableKeyboardHook();
 
-            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
+//            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
+            Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
 
             Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
             {

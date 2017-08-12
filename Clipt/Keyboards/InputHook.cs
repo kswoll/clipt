@@ -19,7 +19,7 @@ namespace Clipt.Keyboards
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
             {
-                keyboardHookId = WinApi.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, KeyboardHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
+                keyboardHookId = WinApi.SetWindowsHookEx((int)HookType.WH_KEYBOARD_LL, keyboardHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
             }
             WinApi.GetKeyboardState(keyPressedState);
         }
@@ -34,7 +34,7 @@ namespace Clipt.Keyboards
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
             {
-                mouseHookId = WinApi.SetWindowsHookEx((int)HookType.WH_MOUSE_LL, MouseHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
+                mouseHookId = WinApi.SetWindowsHookEx((int)HookType.WH_MOUSE_LL, mouseHookCallback, WinApi.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
