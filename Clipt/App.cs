@@ -13,6 +13,8 @@ namespace Clipt
 
         public TaskbarIcon TrayIcon { get; private set; }
 
+        private static Script script;
+
         /// <summary>
         /// Application Entry Point.
         /// </summary>
@@ -21,7 +23,14 @@ namespace Clipt
         public static void Main()
         {
             Instance = new App();
-            Instance.Run();
+            try
+            {
+                Instance.Run();
+            }
+            finally
+            {
+                ((IDisposable)script)?.Dispose();
+            }
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -36,7 +45,7 @@ namespace Clipt
             var contextMenu = new ContextMenu();
             var exitMenuItem = new MenuItem
             {
-                Header = "Exit"
+                Header = "E_xit"
             };
             exitMenuItem.Click += (sender, args) => Shutdown();
             contextMenu.Items.Add(exitMenuItem);
@@ -56,17 +65,15 @@ public class MyScript : Script
 {
     public override void Run()
     {
-        Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());        
+        Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
     }
 }
 new MyScript().Run();
 ", ScriptOptions.Default.WithImports("Clipt", "System.Windows").AddReferences(typeof(Script).Assembly)).RunAsync();
 */
 
-            using (var script = new TestScript())
-            {
-                script.Run();
-            }
+            script = new TestScript();
+            script.Run();
         }
     }
 }
