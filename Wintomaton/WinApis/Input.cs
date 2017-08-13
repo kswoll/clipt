@@ -3,7 +3,7 @@
 namespace Wintomaton.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Input
+    public struct Input
     {
         public InputType Type;
         public MouseKeyboardHardwareInput Data;

@@ -62,7 +62,7 @@ namespace Wintomaton.Inputs
             if (isKeyDown)
             {
                 KeyDown?.Invoke(keyCode, scanCode, isExtended, isInjected);
-                Debug.WriteLine($"vkCode: {keyCode}, scanCode: {scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
+//                Debug.WriteLine($"vkCode: {keyCode}, scanCode: {scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
             }
             else
             {
@@ -165,8 +165,8 @@ namespace Wintomaton.Inputs
                     if (ProcessKey(keyCode, 0, isKeyDown, isKeyUp, false, isInjected, mouseData.Point))
                         return new IntPtr(1);
 
-                    if (isKeyDown)
-                        Debug.WriteLine($"vkCode: {keyCode}, injected: {isInjected}");
+//                    if (isKeyDown)
+//                        Debug.WriteLine($"vkCode: {keyCode}, injected: {isInjected}");
 
                     break;
             }

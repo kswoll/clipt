@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Wintomaton.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct KeyboardInput
+    public struct KeyboardInput
     {
         public ushort Vk;
         public ushort Scan;

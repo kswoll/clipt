@@ -3,7 +3,7 @@
 namespace Wintomaton.WinApis
 {
     [Flags]
-    internal enum KeyInputEvent : uint
+    public enum KeyInputEvent : uint
     {
         KEYDOWN = 0x0000,
         EXTENDEDKEY = 0x0001,

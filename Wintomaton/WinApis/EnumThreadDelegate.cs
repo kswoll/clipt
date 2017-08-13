@@ -2,5 +2,5 @@
 
 namespace Wintomaton.WinApis
 {
-    internal delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
+    public delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
 }

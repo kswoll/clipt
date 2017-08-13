@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Wintomaton.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct MouseInput
+    public struct MouseInput
     {
         public int X;
         public int Y;

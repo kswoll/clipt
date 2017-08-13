@@ -14,13 +14,7 @@ namespace Wintomaton
             EnableKeyboardHook();
             EnableMouseHook();
 
-//            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
-            Clipboard.Changed += () =>
-            {
-                var text = Clipboard.GetText();
-                Debug.WriteLine(text);
-                Tray.Icon.ShowBalloonTip("Copied!", text, BalloonIcon.Info);
-            };
+            Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
 
             Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
             Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
@@ -57,6 +51,16 @@ namespace Wintomaton
                 var activeWindow = WinApi.GetForegroundWindow();
                 var windows = Windows.GetVisibleWindowsWithSameProcess(activeWindow);
                 Windows.ActivateNextWindow(windows, activeWindow);
+            });
+
+            Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Shift, KeyCode.I, () =>
+            {
+//                var handle = WinApi.FindWindow(null, "Slack - Plangrid");
+//                MessageBox.Show($"Handle: {handle}");
+                var window = WinApi.GetForegroundWindow();
+                var className = Windows.GetWindowProcessImageName(window);
+                var windowText = Windows.GetWindowText(window);
+                MessageBox.Show($"className:\r\n{className}\r\nwindowText:\r\n{windowText}");
             });
 
             Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));

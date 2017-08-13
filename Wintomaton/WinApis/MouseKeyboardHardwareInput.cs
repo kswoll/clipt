@@ -3,7 +3,7 @@
 namespace Wintomaton.WinApis
 {
     [StructLayout(LayoutKind.Explicit)]
-    internal struct MouseKeyboardHardwareInput
+    public struct MouseKeyboardHardwareInput
     {
         [FieldOffset(0)] public HardwareInput Hardware;
         [FieldOffset(0)] public KeyboardInput Keyboard;

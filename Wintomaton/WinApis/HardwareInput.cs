@@ -3,7 +3,7 @@
 namespace Wintomaton.WinApis
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct HardwareInput
+    public struct HardwareInput
     {
         public uint Msg;
         public ushort ParamL;
