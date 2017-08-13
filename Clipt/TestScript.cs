@@ -1,5 +1,6 @@
 ﻿using System.Windows;
-using Clipt.Keyboards;
+using Clipt.Inputs;
+using Clipt.Utils;
 using Clipt.WinApis;
 using Hardcodet.Wpf.TaskbarNotification;
 
@@ -10,9 +11,13 @@ namespace Clipt
         public override void Run()
         {
             EnableKeyboardHook();
+            EnableMouseHook();
 
 //            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
             Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
+
+            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
+            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
             Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
             {
@@ -67,11 +72,6 @@ namespace Clipt
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("hello");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("🏗️");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Register(keys => Debug.WriteLine("Success"));
-        }
-
-        private static void SomeHotKey(HotKey hotKey)
-        {
-
         }
     }
 }

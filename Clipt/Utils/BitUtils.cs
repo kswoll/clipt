@@ -24,5 +24,15 @@
         {
             return (byte)(value & 0x00FF);
         }
+
+        public static ushort GetHighOrderWord(uint value)
+        {
+            return (ushort)((value & 0xFFFF0000) >> 16);
+        }
+
+        public static ushort GetLowOrderWord(uint value)
+        {
+            return (ushort)(value & 0x0000FFFF);
+        }
     }
 }
