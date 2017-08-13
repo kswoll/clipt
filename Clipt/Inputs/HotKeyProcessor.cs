@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class HotKeyProcessor
     {
@@ -52,7 +51,6 @@ namespace Clipt.Keyboards
             if (ignoredKeyUps.Contains(key))
             {
                 ignoredKeyUps = ignoredKeyUps.Remove(key);
-                Debug.WriteLine($"KeyUp ignored left: {ignoredKeyUps.Count}");
                 return true;
             }
             return false;
@@ -67,7 +65,6 @@ namespace Clipt.Keyboards
                     if (hotKey.Process(keyCode))
                     {
                         ignoredKeyUps = new[] { keyCode }.ToImmutableHashSet();
-                        Debug.WriteLine($"Processed  Ignored: {ignoredKeyUps.Count}");
                         var handler = handlersByHotKey[hotKey];
                         handler(hotKey);
                         return true;

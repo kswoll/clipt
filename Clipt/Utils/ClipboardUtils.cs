@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using Clipt.Keyboards;
+using Clipt.Inputs;
 using Clipt.WinApis;
 using Clipt.Windows;
 

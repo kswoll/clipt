@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Clipt.Keyboards
+﻿namespace Clipt.Inputs
 {
     public delegate void KeySequenceHandler(KeySequence sequence);
 }

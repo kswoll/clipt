@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using Clipt.WinApis;
 using Clipt.Windows;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class Shortcut : IMessageReceiver
     {

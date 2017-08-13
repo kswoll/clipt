@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public struct KeyStroke : IEnumerable<KeyCode>
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Clipt.WinApis;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeyReplacementProcessor
     {

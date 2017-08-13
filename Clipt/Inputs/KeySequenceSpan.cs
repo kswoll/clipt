@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public struct KeySequenceSpan : IEnumerable<KeyData>
     {

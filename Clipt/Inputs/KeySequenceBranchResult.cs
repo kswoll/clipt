@@ -1,4 +1,4 @@
-﻿namespace Clipt.Keyboards
+﻿namespace Clipt.Inputs
 {
     public enum KeySequenceBranchResult
     {

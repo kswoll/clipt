@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class SequenceAlreadyRegisteredException : Exception
     {

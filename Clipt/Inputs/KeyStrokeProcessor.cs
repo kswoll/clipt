@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Windows;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeyStrokeProcessor
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Clipt.WinApis;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeySender
     {
@@ -73,20 +72,20 @@ namespace Clipt.Keyboards
             switch (keyCode)
             {
                 case KeyCode.LeftButton:
-                    mouseInput.Flags = isKeyDown ? MouseEvent.MOUSEEVENTF_LEFTDOWN : MouseEvent.MOUSEEVENTF_LEFTUP;
+                    mouseInput.Flags = isKeyDown ? MouseInputEvent.MOUSEEVENTF_LEFTDOWN : MouseInputEvent.MOUSEEVENTF_LEFTUP;
                     break;
                 case KeyCode.RightButton:
-                    mouseInput.Flags = isKeyDown ? MouseEvent.MOUSEEVENTF_RIGHTDOWN : MouseEvent.MOUSEEVENTF_RIGHTUP;
+                    mouseInput.Flags = isKeyDown ? MouseInputEvent.MOUSEEVENTF_RIGHTDOWN : MouseInputEvent.MOUSEEVENTF_RIGHTUP;
                     break;
                 case KeyCode.MiddleButton:
-                    mouseInput.Flags = isKeyDown ? MouseEvent.MOUSEEVENTF_MIDDLEDOWN : MouseEvent.MOUSEEVENTF_MIDDLEUP;
+                    mouseInput.Flags = isKeyDown ? MouseInputEvent.MOUSEEVENTF_MIDDLEDOWN : MouseInputEvent.MOUSEEVENTF_MIDDLEUP;
                     break;
                 case KeyCode.ExtraButton1:
-                    mouseInput.Flags = isKeyDown ? MouseEvent.MOUSEEVENTF_XDOWN : MouseEvent.MOUSEEVENTF_XUP;
+                    mouseInput.Flags = isKeyDown ? MouseInputEvent.MOUSEEVENTF_XDOWN : MouseInputEvent.MOUSEEVENTF_XUP;
                     mouseInput.MouseData = 1;
                     break;
                 case KeyCode.ExtraButton2:
-                    mouseInput.Flags = isKeyDown ? MouseEvent.MOUSEEVENTF_XDOWN : MouseEvent.MOUSEEVENTF_XUP;
+                    mouseInput.Flags = isKeyDown ? MouseInputEvent.MOUSEEVENTF_XDOWN : MouseInputEvent.MOUSEEVENTF_XUP;
                     mouseInput.MouseData = 2;
                     break;
             }

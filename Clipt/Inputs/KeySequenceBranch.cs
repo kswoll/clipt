@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeySequenceBranch : IKeySequenceNode
     {

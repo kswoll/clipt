@@ -9,7 +9,7 @@ namespace Clipt.WinApis
         public int X;
         public int Y;
         public uint MouseData;
-        public MouseEvent Flags;
+        public MouseInputEvent Flags;
         public uint Time;
         public IntPtr ExtraInfo;
     }

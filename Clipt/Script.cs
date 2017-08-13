@@ -1,5 +1,5 @@
 ﻿using System;
-using Clipt.Keyboards;
+using Clipt.Inputs;
 using Clipt.Utils;
 
 namespace Clipt
@@ -11,6 +11,7 @@ namespace Clipt
         public ClipboardUtils Clipboard { get; } = new ClipboardUtils();
         public TextUtils Text { get; } = new TextUtils();
         public KeyboardUtils Keyboard { get; } = new KeyboardUtils();
+        public MouseUtils Mouse { get; } = new MouseUtils();
         public WindowUtils Windows { get; }
         public ProcessUtils Processes { get; } = new ProcessUtils();
         public TrayUtils Tray { get; } = new TrayUtils();

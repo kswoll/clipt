@@ -1,8 +1,7 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 using Clipt.WinApis;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeySequenceProcessor
     {

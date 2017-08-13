@@ -1,6 +1,6 @@
 ﻿namespace Clipt.WinApis
 {
-    public enum MouseEvent : uint
+    public enum MouseInputEvent : uint
     {
         MOUSEEVENTF_ABSOLUTE = 0x8000,
         MOUSEEVENTF_HWHEEL = 0x1000,

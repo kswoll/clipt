@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Clipt.WinApis;
 
-namespace Clipt.Keyboards
+namespace Clipt.Inputs
 {
     public class KeySequence : IEnumerable<KeyData>
     {

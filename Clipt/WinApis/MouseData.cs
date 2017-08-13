@@ -3,6 +3,6 @@
     public struct MouseData
     {
         public ushort Reserved;
-        public ushort Data;
+        public short Data;
     }
 }

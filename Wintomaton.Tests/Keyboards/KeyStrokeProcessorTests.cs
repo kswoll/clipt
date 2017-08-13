@@ -1,4 +1,4 @@
-﻿using Clipt.Keyboards;
+﻿using Clipt.Inputs;
 using NUnit.Framework;
 
 namespace Wintomaton.Tests.Keyboards

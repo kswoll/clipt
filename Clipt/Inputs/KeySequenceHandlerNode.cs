@@ -1,4 +1,4 @@
-﻿namespace Clipt.Keyboards
+﻿namespace Clipt.Inputs
 {
     public struct KeySequenceHandlerNode : IKeySequenceNode
     {
