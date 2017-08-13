@@ -1,5 +1,5 @@
-﻿using Clipt.Inputs;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Wintomaton.Inputs;
 
 namespace Wintomaton.Tests.Keyboards
 {
