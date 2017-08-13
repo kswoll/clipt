@@ -3,7 +3,7 @@
 namespace Clipt.WinApis
 {
     [Flags]
-    internal enum KeyEvent : uint
+    internal enum KeyInputEvent : uint
     {
         KEYDOWN = 0x0000,
         EXTENDEDKEY = 0x0001,

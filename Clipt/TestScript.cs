@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using Clipt.Inputs;
 using Clipt.Utils;
 using Clipt.WinApis;
@@ -14,12 +15,17 @@ namespace Clipt
             EnableMouseHook();
 
 //            Clipboard.Changed += () => MessageBox.Show(Clipboard.GetText());
-            Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
+            Clipboard.Changed += () =>
+            {
+                var text = Clipboard.GetText();
+                Debug.WriteLine(text);
+                Tray.Icon.ShowBalloonTip("Copied!", text, BalloonIcon.Info);
+            };
 
             Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
             Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
-            Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Alt, KeyCode.V, () =>
+            Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Windows, KeyCode.V, () =>
             {
                 var text = System.Windows.Clipboard.GetText();
                 text = Text.TrimIndent(text);

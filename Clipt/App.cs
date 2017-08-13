@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Clipt.Windows;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Clipt
@@ -13,13 +14,14 @@ namespace Clipt
 
         public TaskbarIcon TrayIcon { get; private set; }
 
+        public static BitmapImage AppIcon { get; private set; }
+
         private static Script script;
 
         /// <summary>
         /// Application Entry Point.
         /// </summary>
         [STAThread]
-        [DebuggerNonUserCode]
         public static void Main()
         {
             Instance = new App();
@@ -37,12 +39,20 @@ namespace Clipt
         {
             base.OnStartup(e);
 
-            var logo = new BitmapImage();
-            logo.BeginInit();
-            logo.UriSource = new Uri("pack://application:,,,/Clipt;component/Assets/Wintomaton.ico");
-            logo.EndInit();
+            AppIcon = new BitmapImage();
+            AppIcon.BeginInit();
+            AppIcon.UriSource = new Uri("pack://application:,,,/Clipt;component/Assets/Wintomaton.ico");
+            AppIcon.EndInit();
 
             var contextMenu = new ContextMenu();
+
+            var keyRecorderMenuItem = new MenuItem
+            {
+                Header = "Key _Recorder"
+            };
+            keyRecorderMenuItem.Click += (sender, args) => new KeyRecorder().Show();
+            contextMenu.Items.Add(keyRecorderMenuItem);
+
             var exitMenuItem = new MenuItem
             {
                 Header = "E_xit"
@@ -52,7 +62,7 @@ namespace Clipt
 
             TrayIcon = new TaskbarIcon
             {
-                IconSource = logo,
+                IconSource = AppIcon,
                 ToolTipText = "Wintomaton",
                 ContextMenu = contextMenu
             };

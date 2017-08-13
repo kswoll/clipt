@@ -50,7 +50,7 @@ namespace Clipt.Inputs
             {
                 Vk = keyCode == KeyCode.Packet ? (ushort)0 : (ushort)keyCode,
                 Scan = scanCode,
-                Flags = (isKeyDown ? KeyEvent.KEYDOWN : KeyEvent.KEYUP) | (scanCode == 0 ? 0 : KeyEvent.UNICODE),
+                Flags = (isKeyDown ? KeyInputEvent.KEYDOWN : KeyInputEvent.KEYUP) | (scanCode == 0 ? 0 : KeyInputEvent.UNICODE),
                 Time = 0,
                 ExtraInfo = IntPtr.Zero
             };

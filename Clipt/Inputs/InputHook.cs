@@ -8,6 +8,9 @@ namespace Clipt.Inputs
 {
     public class InputHook
     {
+        public static event KeyEventHandler KeyDown;
+        public static event KeyEventHandler KeyUp;
+
         private static readonly LowLevelHookProc keyboardHookCallback = KeyboardHookCallback;
         private static readonly LowLevelHookProc mouseHookCallback = MouseHookCallback;
         private static readonly KeyStateByte[] keyPressedState = new KeyStateByte[256];
@@ -54,8 +57,18 @@ namespace Clipt.Inputs
             return keyPressedState[(byte)key] == KeyStateByte.Toggled;
         }
 
-        private static bool ProcessKey(KeyCode keyCode, bool isKeyDown, bool isKeyUp, bool isInjected, MousePoint? point)
+        private static bool ProcessKey(KeyCode keyCode, uint scanCode, bool isKeyDown, bool isKeyUp, bool isExtended, bool isInjected, MousePoint? point)
         {
+            if (isKeyDown)
+            {
+                KeyDown?.Invoke(keyCode, scanCode, isExtended, isInjected);
+                Debug.WriteLine($"vkCode: {keyCode}, scanCode: {scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
+            }
+            else
+            {
+                KeyUp?.Invoke(keyCode, scanCode, isExtended, isInjected);
+            }
+
             if ((isKeyDown || isKeyUp) && !isInjected)
                 if (isKeyDown)
                 {
@@ -117,15 +130,12 @@ namespace Clipt.Inputs
             var isKeyDown = message == WindowMessage.WM_KEYDOWN || message == WindowMessage.WM_SYSKEYDOWN;
             var isKeyUp = message == WindowMessage.WM_KEYUP || message == WindowMessage.WM_SYSKEYUP;
 
-            if (ProcessKey(keyCode, isKeyDown, isKeyUp, isInjected, null))
+            if (ProcessKey(keyCode, keyboardData.scanCode, isKeyDown, isKeyUp, isExtended, isInjected, null))
                 return new IntPtr(1);
 
             if (message == WindowMessage.WM_KEYDOWN)
                 if (KeySequenceProcessor.Instance.ProcessKey(keyCode, isShiftDown))
                     return new IntPtr(1);
-
-            if (isKeyDown)
-                Debug.WriteLine($"vkCode: {keyCode}, scanCode: {keyboardData.scanCode}, extendedKey: {isExtended}, injected: {isInjected}");
 
             return WinApi.CallNextHookEx(keyboardHookId, nCode, wParam, lParam);
         }
@@ -152,7 +162,7 @@ namespace Clipt.Inputs
                     var isInjected = (mouseData.Flags & MouseLowLevelHookStructFlags.LLMHF_INJECTED) != 0;
                     var (keyCode, isKeyDown, isKeyUp, _) = DecodeMouseData(message, mouseData.MouseData.Data);
 
-                    if (ProcessKey(keyCode, isKeyDown, isKeyUp, isInjected, mouseData.Point))
+                    if (ProcessKey(keyCode, 0, isKeyDown, isKeyUp, false, isInjected, mouseData.Point))
                         return new IntPtr(1);
 
                     if (isKeyDown)

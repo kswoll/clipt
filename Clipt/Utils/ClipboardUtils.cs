@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using Clipt.Inputs;
 using Clipt.WinApis;
@@ -9,7 +10,21 @@ namespace Clipt.Utils
     public class ClipboardUtils : IMessageReceiver
     {
         public string GetText() => Clipboard.GetText();
-        public void SetText(string text) => Clipboard.SetText(text);
+
+        private bool isIgnoringClipboardChanged;
+
+        public void SetText(string text)
+        {
+            isIgnoringClipboardChanged = true;
+            try
+            {
+                Clipboard.SetText(text, TextDataFormat.Text);
+            }
+            finally
+            {
+                isIgnoringClipboardChanged = false;
+            }
+        }
 
         public event Action Changed;
 
@@ -32,6 +47,9 @@ namespace Clipt.Utils
 
         public void HandleMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (isIgnoringClipboardChanged)
+                return;
+
             switch (message)
             {
                 case WindowMessage.WM_DRAWCLIPBOARD:

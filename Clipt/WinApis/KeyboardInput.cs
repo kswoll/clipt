@@ -8,7 +8,7 @@ namespace Clipt.WinApis
     {
         public ushort Vk;
         public ushort Scan;
-        public KeyEvent Flags;
+        public KeyInputEvent Flags;
         public uint Time;
         public IntPtr ExtraInfo;
     }

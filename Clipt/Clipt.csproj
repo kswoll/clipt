@@ -51,6 +51,9 @@
     <Reference Include="Microsoft.CodeAnalysis.Scripting, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeAnalysis.Scripting.Common.2.3.1\lib\netstandard1.3\Microsoft.CodeAnalysis.Scripting.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
@@ -150,6 +153,7 @@
     <Compile Include="Inputs\HotKeyProcessor.cs" />
     <Compile Include="Inputs\HotMouse.cs" />
     <Compile Include="Inputs\HotMouseHandler.cs" />
+    <Compile Include="Inputs\KeyEventHandler.cs" />
     <Compile Include="Inputs\MouseEvent.cs" />
     <Compile Include="Inputs\KeyCodes.cs" />
     <Compile Include="Inputs\KeyReplacementProcessor.cs" />
@@ -209,7 +213,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="WinApis\HookType.cs" />
-    <Compile Include="WinApis\KeyEvent.cs" />
+    <Compile Include="WinApis\KeyInputEvent.cs" />
     <Compile Include="WinApis\MapVirtualKeyType.cs" />
     <Compile Include="WinApis\MouseData.cs" />
     <Compile Include="WinApis\MouseInputEvent.cs" />
@@ -227,6 +231,7 @@
     <Compile Include="WinApis\LowLevelHookProc.cs" />
     <Compile Include="WinApis\WindowMessage.cs" />
     <Compile Include="Windows\IMessageReceiver.cs" />
+    <Compile Include="Windows\KeyRecorder.cs" />
     <Compile Include="Windows\MessageReceiverWindow.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
