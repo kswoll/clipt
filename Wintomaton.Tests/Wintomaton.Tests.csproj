@@ -60,9 +60,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Clipt\Clipt.csproj">
+    <ProjectReference Include="..\Wintomaton\Wintomaton.csproj">
       <Project>{1f6f388f-4470-4495-83bd-9cdba57b06ae}</Project>
-      <Name>Clipt</Name>
+      <Name>Wintomaton</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
