@@ -45,7 +45,7 @@ namespace Wintomaton.Inputs
         {
             Register(keys =>
             {
-                foreach (var _ in keys)
+                foreach (var _ in keys.Take(keys.Count - 1))
                 {
                     KeySender.SendKeyPress(KeyCode.Back);
                 }
