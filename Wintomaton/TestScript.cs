@@ -78,8 +78,27 @@ namespace Wintomaton
 //            var lowOrderByte = BitUtils.GetLowOrderByte(result);
 //            var highOrderByte = BitUtils.GetHighOrderByte(result);
 
+            // Emoji / textmoji replacements
             KeySequence.FromString("$merge").Substitute("⛙");
-            KeySequence.FromString("tEst").Substitute("🏗️");
+            KeySequence.FromString("$shrug").Substitute("¯\\_(ツ)_/¯");
+            KeySequence.FromString("$check").Substitute("✅");
+            KeySequence.FromString("$drop").Substitute("💧");
+            KeySequence.FromString("$pill").Substitute("💊");
+            KeySequence.FromString("$code").Substitute("🏗️");
+            KeySequence.FromString("$syringe").Substitute("💉");
+            KeySequence.FromString("$cloud").Substitute("☁️");
+            KeySequence.FromString("$mute").Substitute("🔇");
+            KeySequence.FromString("$ambulance").Substitute("🚑");
+            KeySequence.FromString("$sheet").Substitute("🗞");
+            KeySequence.FromString("$pointright").Substitute("👉");
+            KeySequence.FromString("$arrowright").Substitute("➜");
+            KeySequence.FromString("$boom").Substitute("💥");
+
+
+
+
+
+//            KeySequence.FromString("tEst").Substitute("🏗️");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("hello");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Substitute("🏗️");
 //            new KeySequence(KeyCode.T, KeyCode.E, KeyCode.S, KeyCode.T).Register(keys => Debug.WriteLine("Success"));
