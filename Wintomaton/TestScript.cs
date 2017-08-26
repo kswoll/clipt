@@ -16,8 +16,8 @@ namespace Wintomaton
 
             Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
 
-            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
-            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
+//            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
+//            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
             Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Windows, KeyCode.V, () =>
             {
@@ -67,6 +67,7 @@ namespace Wintomaton
             Keyboard.AddHotKey(new HotKey(KeyCode.Right, KeyCode.F24), new KeyStroke(KeyCode.End));
             Keyboard.AddHotKey(new HotKey(KeyCode.Up, KeyCode.F24), new KeyStroke(KeyCode.Prior));
             Keyboard.AddHotKey(new HotKey(KeyCode.Down, KeyCode.F24), new KeyStroke(KeyCode.Next));
+            Keyboard.AddHotKey(new HotKey(KeyCode.BrowserHome), new KeyStroke(KeyCode.Application));
 
 //            Keyboard.ReplaceKey(KeyCode.N1, KeyCode.N2);
 //            Keyboard.ReplaceKey(KeyCode.N2, KeyCode.RightButton);
