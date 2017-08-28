@@ -1,30 +1,72 @@
-﻿// <copyright file="KeyboardHook.cs" company="PlanGrid, Inc.">
-//     Copyright (c) 2017 PlanGrid, Inc. All rights reserved.
-// </copyright>
-
-using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Wintomaton.WinApis;
+using Wintomaton.Windows;
 
 namespace Wintomaton.Inputs
 {
-    public class HotKey
+    public class HotKey : IMessageReceiver
     {
-        public ImmutableList<KeyCode> Modifiers { get; }
-        public KeyCode Activator { get; }
+        public static HotKey Instance { get; } = new HotKey();
 
-        public HotKey(KeyCode activator, params KeyCode[] modifiers)
+        private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
+
+        private IntPtr hwnd;
+        private int nextHotKeyId = 9000;
+
+        public HotKey()
         {
-            Activator = activator;
-            Modifiers = modifiers.ToImmutableList();
+            MessageReceiverWindow.Instance.RegisterReceiver(this);
         }
 
-        public bool Process(KeyCode key)
+        public void Attach(IntPtr hwnd)
         {
-            foreach (var modifier in Modifiers)
+            this.hwnd = hwnd;
+        }
+
+        public void Detach(IntPtr hwnd)
+        {
+            this.hwnd = IntPtr.Zero;
+
+            foreach (var id in handlers.Keys)
             {
-                if (!InputHook.IsKeyPressed(modifier))
-                    return false;
+                WinApi.UnregisterHotKey(hwnd, id);
             }
-            return true;
+        }
+
+        public void AddHotKey(KeyCode key, ModifierKeys modifiers, Func<bool> handler)
+        {
+            if (!WinApi.RegisterHotKey(hwnd, nextHotKeyId, modifiers, (uint)key))
+            {
+                var error = Marshal.GetLastWin32Error();
+                throw new Exception($"Unable to register hotkey: {error}");
+            }
+            else
+            {
+                handlers[nextHotKeyId] = handler;
+                nextHotKeyId++;
+            }
+        }
+
+        public void AddHotKey(KeyCode key, ModifierKeys modifiers, Action handler)
+        {
+            AddHotKey(key, modifiers, () =>
+            {
+                handler();
+                return true;
+            });
+        }
+
+        public void HandleMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (message)
+            {
+                case WindowMessage.WM_HOTKEY:
+                    var handler = handlers[wParam.ToInt32()];
+                    handled = handler();
+                    break;
+            }
         }
     }
 }

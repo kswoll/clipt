@@ -4,6 +4,6 @@ namespace Wintomaton.Utils
 {
     public class MouseUtils
     {
-        public void AddHotMouse(HotMouse hotMouse, HotMouseHandler handler) => HotMouseProcessor.Instance.Register(hotMouse, handler);
+        public void AddHotMouse(MouseEvent mouseEvent, MouseEventHandler handler) => MouseEventProcessor.Instance.Register(mouseEvent, handler);
     }
 }

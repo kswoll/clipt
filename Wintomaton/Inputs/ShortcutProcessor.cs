@@ -3,27 +3,27 @@ using System.Collections.Immutable;
 
 namespace Wintomaton.Inputs
 {
-    public class HotKeyProcessor
+    public class ShortcutProcessor
     {
-        public static HotKeyProcessor Instance { get; } = new HotKeyProcessor();
+        public static ShortcutProcessor Instance { get; } = new ShortcutProcessor();
 
-        private readonly Dictionary<KeyCode, List<HotKey>> hotKeysByActivator = new Dictionary<KeyCode, List<HotKey>>();
-        private readonly Dictionary<HotKey, HotKeyHandler> handlersByHotKey = new Dictionary<HotKey, HotKeyHandler>();
+        private readonly Dictionary<KeyCode, List<Shortcut>> shortcutsByKeyCode = new Dictionary<KeyCode, List<Shortcut>>();
+        private readonly Dictionary<Shortcut, ShortcutHandler> keyCodeHandlersByShortcut = new Dictionary<Shortcut, ShortcutHandler>();
 
         private ImmutableHashSet<KeyCode> ignoredKeyUps = ImmutableHashSet<KeyCode>.Empty;
 
-        public void Register(HotKey hotKey, HotKeyHandler handler)
+        public void Register(Shortcut hotKey, ShortcutHandler handler)
         {
-            if (!hotKeysByActivator.TryGetValue(hotKey.Activator, out var hotKeys))
+            if (!shortcutsByKeyCode.TryGetValue(hotKey.Activator, out var hotKeys))
             {
-                hotKeys = new List<HotKey>();
-                hotKeysByActivator[hotKey.Activator] = hotKeys;
+                hotKeys = new List<Shortcut>();
+                shortcutsByKeyCode[hotKey.Activator] = hotKeys;
             }
             hotKeys.Add(hotKey);
-            handlersByHotKey[hotKey] = handler;
+            keyCodeHandlersByShortcut[hotKey] = handler;
         }
 
-        public void Register(HotKey hotKey, KeyStroke replacement)
+        public void Register(Shortcut hotKey, KeyStroke replacement)
         {
             Register(hotKey, _ =>
             {
@@ -58,14 +58,14 @@ namespace Wintomaton.Inputs
 
         private bool ProcessKeyDown(KeyCode keyCode)
         {
-            if (hotKeysByActivator.TryGetValue(keyCode, out var hotKeys))
+            if (shortcutsByKeyCode.TryGetValue(keyCode, out var hotKeys))
             {
                 foreach (var hotKey in hotKeys)
                 {
-                    if (hotKey.Process(keyCode))
+                    if (hotKey.Process())
                     {
                         ignoredKeyUps = new[] { keyCode }.ToImmutableHashSet();
-                        var handler = handlersByHotKey[hotKey];
+                        var handler = keyCodeHandlersByShortcut[hotKey];
                         handler(hotKey);
                         return true;
                     }

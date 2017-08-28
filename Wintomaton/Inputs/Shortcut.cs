@@ -1,72 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Wintomaton.WinApis;
-using Wintomaton.Windows;
+﻿// <copyright file="KeyboardHook.cs" company="PlanGrid, Inc.">
+//     Copyright (c) 2017 PlanGrid, Inc. All rights reserved.
+// </copyright>
+
+using System.Collections.Immutable;
 
 namespace Wintomaton.Inputs
 {
-    public class Shortcut : IMessageReceiver
+    public class Shortcut
     {
-        public static Shortcut Instance { get; } = new Shortcut();
+        public ImmutableList<KeyCode> Modifiers { get; }
+        public KeyCode Activator { get; }
 
-        private readonly Dictionary<int, Func<bool>> handlers = new Dictionary<int, Func<bool>>();
-
-        private IntPtr hwnd;
-        private int nextHotKeyId = 9000;
-
-        public Shortcut()
+        public Shortcut(KeyCode activator, params KeyCode[] modifiers)
         {
-            MessageReceiverWindow.Instance.RegisterReceiver(this);
+            Activator = activator;
+            Modifiers = modifiers.ToImmutableList();
         }
 
-        public void Attach(IntPtr hwnd)
+        public bool Process()
         {
-            this.hwnd = hwnd;
-        }
-
-        public void Detach(IntPtr hwnd)
-        {
-            this.hwnd = IntPtr.Zero;
-
-            foreach (var id in handlers.Keys)
+            foreach (var modifier in Modifiers)
             {
-                WinApi.UnregisterHotKey(hwnd, id);
+                if (!InputHook.IsKeyPressed(modifier))
+                    return false;
             }
-        }
-
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Func<bool> handler)
-        {
-            if (!WinApi.RegisterHotKey(hwnd, nextHotKeyId, modifiers, (uint)key))
-            {
-                var error = Marshal.GetLastWin32Error();
-                throw new Exception($"Unable to register hotkey: {error}");
-            }
-            else
-            {
-                handlers[nextHotKeyId] = handler;
-                nextHotKeyId++;
-            }
-        }
-
-        public void AddShortcut(ModifierKeys modifiers, KeyCode key, Action handler)
-        {
-            AddShortcut(modifiers, key, () =>
-            {
-                handler();
-                return true;
-            });
-        }
-
-        public void HandleMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch (message)
-            {
-                case WindowMessage.WM_HOTKEY:
-                    var handler = handlers[wParam.ToInt32()];
-                    handled = handler();
-                    break;
-            }
+            return true;
         }
     }
 }

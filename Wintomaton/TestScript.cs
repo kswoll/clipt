@@ -19,41 +19,39 @@ namespace Wintomaton
 //            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
 //            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
-            Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Windows, KeyCode.V, () =>
+            Keyboard.AddHotKey(KeyCode.V, ModifierKeys.Ctrl | ModifierKeys.Windows, () =>
             {
                 var text = System.Windows.Clipboard.GetText();
                 text = Text.TrimIndent(text);
                 Clipboard.Paste(text);
             });
 
-            Keyboard.AddShortcut(
-                ModifierKeys.Alt | ModifierKeys.Ctrl | ModifierKeys.Shift | ModifierKeys.Windows,
-                KeyCode.Escape,
-                () => Application.Current.Shutdown());
+            Keyboard.AddHotKey(KeyCode.Escape,
+                ModifierKeys.Alt | ModifierKeys.Ctrl | ModifierKeys.Shift | ModifierKeys.Windows, () => Application.Current.Shutdown());
 
 //            Keyboard.RegisterStroke(new KeyStroke(KeyCode.LeftControl, KeyCode.LeftMenu, KeyCode.R), stroke => Debug.WriteLine("Stroked!"));
 
-            Keyboard.RegisterStroke(new KeyStroke(KeyCode.ExtraButton2), _ =>
+            Keyboard.AddShortcut(new Shortcut(KeyCode.ExtraButton2), _ =>
             {
                 Keyboard.SendKeyDown(KeyCode.Control);
                 Keyboard.SendKeyPress(KeyCode.Home);
                 Keyboard.SendKeyUp(KeyCode.Control);
             });
-            Keyboard.RegisterStroke(new KeyStroke(KeyCode.ExtraButton1), _ =>
+            Keyboard.AddShortcut(new Shortcut(KeyCode.ExtraButton1), _ =>
             {
                 Keyboard.SendKeyDown(KeyCode.Control);
                 Keyboard.SendKeyPress(KeyCode.End);
                 Keyboard.SendKeyUp(KeyCode.Control);
             });
 
-            Keyboard.AddHotKey(new HotKey(KeyCode.OEM3, KeyCode.LeftMenu), hotKey =>
+            Keyboard.AddShortcut(new Shortcut(KeyCode.OEM3, KeyCode.LeftMenu), hotKey =>
             {
                 var activeWindow = WinApi.GetForegroundWindow();
                 var windows = Windows.GetVisibleWindowsWithSameProcess(activeWindow);
                 Windows.ActivateNextWindow(windows, activeWindow);
             });
 
-            Keyboard.AddShortcut(ModifierKeys.Ctrl | ModifierKeys.Shift, KeyCode.I, () =>
+            Keyboard.AddHotKey(KeyCode.I, ModifierKeys.Ctrl | ModifierKeys.Shift, () =>
             {
 //                var handle = WinApi.FindWindow(null, "Slack - Plangrid");
 //                MessageBox.Show($"Handle: {handle}");
@@ -63,11 +61,11 @@ namespace Wintomaton
                 MessageBox.Show($"className:\r\n{className}\r\nwindowText:\r\n{windowText}");
             });
 
-            Keyboard.AddHotKey(new HotKey(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));
-            Keyboard.AddHotKey(new HotKey(KeyCode.Right, KeyCode.F24), new KeyStroke(KeyCode.End));
-            Keyboard.AddHotKey(new HotKey(KeyCode.Up, KeyCode.F24), new KeyStroke(KeyCode.Prior));
-            Keyboard.AddHotKey(new HotKey(KeyCode.Down, KeyCode.F24), new KeyStroke(KeyCode.Next));
-            Keyboard.AddHotKey(new HotKey(KeyCode.BrowserHome), new KeyStroke(KeyCode.Application));
+            Keyboard.AddShortcut(new Shortcut(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));
+            Keyboard.AddShortcut(new Shortcut(KeyCode.Right, KeyCode.F24), new KeyStroke(KeyCode.End));
+            Keyboard.AddShortcut(new Shortcut(KeyCode.Up, KeyCode.F24), new KeyStroke(KeyCode.Prior));
+            Keyboard.AddShortcut(new Shortcut(KeyCode.Down, KeyCode.F24), new KeyStroke(KeyCode.Next));
+            Keyboard.AddShortcut(new Shortcut(KeyCode.BrowserHome), new KeyStroke(KeyCode.Application));
 
 //            Keyboard.ReplaceKey(KeyCode.N1, KeyCode.N2);
 //            Keyboard.ReplaceKey(KeyCode.N2, KeyCode.RightButton);

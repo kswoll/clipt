@@ -149,17 +149,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inputs\HotKeyHandler.cs" />
-    <Compile Include="Inputs\HotKeyProcessor.cs" />
-    <Compile Include="Inputs\HotMouse.cs" />
-    <Compile Include="Inputs\HotMouseHandler.cs" />
-    <Compile Include="Inputs\KeyEventHandler.cs" />
     <Compile Include="Inputs\MouseEvent.cs" />
+    <Compile Include="Inputs\ShortcutHandler.cs" />
+    <Compile Include="Inputs\ShortcutProcessor.cs" />
+    <Compile Include="Inputs\MouseEventHandler.cs" />
+    <Compile Include="Inputs\KeyEventHandler.cs" />
+    <Compile Include="Inputs\MouseEventType.cs" />
     <Compile Include="Inputs\KeyCodes.cs" />
     <Compile Include="Inputs\KeyReplacementProcessor.cs" />
     <Compile Include="Inputs\KeyStrokeHandler.cs" />
-    <Compile Include="Inputs\HotMouseProcessor.cs" />
-    <Compile Include="Inputs\Shortcut.cs" />
+    <Compile Include="Inputs\MouseEventProcessor.cs" />
+    <Compile Include="Inputs\HotKey.cs" />
     <Compile Include="Utils\Actions.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Inputs\KeyboardUtils.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="Inputs\IKeySequenceNode.cs" />
     <Compile Include="Inputs\InputHook.cs" />
     <Compile Include="Inputs\KeySender.cs" />
-    <Compile Include="Inputs\HotKey.cs" />
+    <Compile Include="Inputs\Shortcut.cs" />
     <Compile Include="Inputs\KeySequenceBranchResult.cs" />
     <Compile Include="Inputs\KeyStroke.cs" />
     <Compile Include="Inputs\KeyStrokeProcessor.cs" />
