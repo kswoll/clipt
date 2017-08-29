@@ -16,7 +16,7 @@ There are a few different ways you can assign behavior based on what you do on t
 * **Shortcut**  
   Similar to a HotKey, but more flexible as the modifiers can be any key on the keyboard.  Shortcuts require the use of a keyboard hook.
 * **KeySequence**  
-  Allows you to take an action after a specific sequence of keys has been typed. This is different from the above in that the modifier keys above must be depressed at the same time when pressing the KeyCode that activates the action.  In contrast, keys in a sequence can be pressed one at a time; the only requirement is that they are pressed in sequence.  This facility is great for replacing strings, for example by replacing a key sequnce with emoji or textmoji, or any other string.
+  Allows you to take an action after a specific sequence of keys has been typed. This is different from the above in that the modifier keys above must be depressed at the same time when pressing the KeyCode that activates the action.  In contrast, keys in a sequence can be pressed one at a time; the only requirement is that they are pressed in sequence.  This facility is great for replacing strings, for example by replacing a key sequence with emoji or textmoji, or any other string.
 * **KeyStroke**  
   When all of the specified keys (one or more) in a KeyStroke are depressed, an action is taken.  This can be useful, for example, for making extra keys on the keyboard execute custom behavior.  This is similar to, but different from, shortcuts except that there is no "activation" KeyCode, so the keys can be pressed in any order.
 * **Key Replacement**  

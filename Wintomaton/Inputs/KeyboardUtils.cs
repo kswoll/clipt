@@ -50,13 +50,21 @@ namespace Wintomaton.Inputs
         /// <param name="replacement">The KeyStroke you want to play back when the Shortcut is triggered.</param>
         public void AddShortcut(Shortcut shortcut, KeyStroke replacement) => ShortcutProcessor.Instance.Register(shortcut, replacement);
 
+        /// <summary>
+        /// Allows you to take an action after a specific sequence of keys has been typed. This is different from the above in that the
+        /// modifier keys above must be depressed at the same time when pressing the KeyCode that activates the action.  In contrast,
+        /// keys in a sequence can be pressed one at a time; the only requirement is that they are pressed in sequence.  This facility
+        /// is great for replacing strings, for example by replacing a key sequnce with emoji or textmoji, or any other string.
+        /// </summary>
+        /// <param name="sequence">Represents a particular sequence of KeyCodes that when satisfied will trigger the handler</param>
+        /// <param name="handler">The behavior you want to execute when the sequence is triggered</param>
+        public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler) => KeySequenceProcessor.Instance.RegisterSequence(sequence, handler);
+        public void RegisterSequence(KeySequence sequence, string substitution) => sequence.Substitute(substitution);
+
         public void SendString(string s) => KeySender.SendString(s);
         public void SendKeyPress(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyPress(keyCode, scanCode);
         public void SendKeyDown(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyDown(keyCode, scanCode);
         public void SendKeyUp(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyUp(keyCode, scanCode);
-
-        public void RegisterSequence(KeySequence sequence, KeySequenceHandler handler) => KeySequenceProcessor.Instance.RegisterSequence(sequence, handler);
-        public void RegisterSequence(KeySequence sequence, string substitution) => sequence.Substitute(substitution);
 
         public void RegisterStroke(KeyStroke keyStroke, KeyStrokeHandler handler) => KeyStrokeProcessor.Instance.Register(keyStroke, handler);
         public void RegisterStroke(KeyStroke keyStroke, KeyStroke replacement) => KeyStrokeProcessor.Instance.Register(keyStroke, replacement);
