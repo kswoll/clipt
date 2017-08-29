@@ -7,7 +7,7 @@ namespace Wintomaton.TextTransforms
     {
         public static string Transform(string text)
         {
-            var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = text.Split(new[] { Environment.NewLine, "\n" }, StringSplitOptions.None);
 
             // Find the minimum indent
             var minimumIndent = lines.Where(x => x.Trim().Length > 0).Select(x => x.Length - x.TrimStart().Length).Min();
