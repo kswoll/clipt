@@ -92,6 +92,7 @@ namespace Wintomaton
             KeySequence.FromString("$pointright").Substitute("👉");
             KeySequence.FromString("$arrowright").Substitute("➜");
             KeySequence.FromString("$boom").Substitute("💥");
+            KeySequence.FromString("$bump").Substitute("⏫");
 
 
 
