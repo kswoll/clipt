@@ -70,17 +70,54 @@ namespace Wintomaton.Inputs
         /// <param name="substitution">The string that should be sent instead of the original sequence</param>
         public void RegisterSequence(KeySequence sequence, string substitution) => sequence.Substitute(substitution);
 
+        /// <summary>
+        /// Sends the specified string to whatever input control current has focus in the active application's active window.
+        /// </summary>
+        /// <param name="s">The string to send to the input control</param>
         public void SendString(string s) => KeySender.SendString(s);
+
+        /// <summary>
+        /// Sends the specified string to whatever input control current has focus in the active application's active window.
+        /// </summary>
+        /// <param name="keyCode">The key code to send to the input control</param>
+        /// <param name="scanCode">Optionally the hardware specific scan code to send to the control</param>
         public void SendKeyPress(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyPress(keyCode, scanCode);
+
+        /// <summary>
+        /// Sends the specified string to whatever input control current has focus in the active application's active window.
+        /// </summary>
+        /// <param name="keyCode">The key code to send to the input control</param>
+        /// <param name="scanCode">Optionally the hardware specific scan code to send to the control</param>
         public void SendKeyDown(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyDown(keyCode, scanCode);
+
+        /// <summary>
+        /// Sends the specified string to whatever input control current has focus in the active application's active window.
+        /// </summary>
+        /// <param name="keyCode">The key code to send to the input control</param>
+        /// <param name="scanCode">Optionally the hardware specific scan code to send to the control</param>
         public void SendKeyUp(KeyCode keyCode, ushort scanCode = 0) => KeySender.SendKeyUp(keyCode, scanCode);
 
         public void RegisterStroke(KeyStroke keyStroke, KeyStrokeHandler handler) => KeyStrokeProcessor.Instance.Register(keyStroke, handler);
         public void RegisterStroke(KeyStroke keyStroke, KeyStroke replacement) => KeyStrokeProcessor.Instance.Register(keyStroke, replacement);
 
+        /// <summary>
+        /// Replaces one key with another.  So you could, for example, make it so that when you press P, a Q is sent.  Most likely
+        /// only useful for modifier keys.
+        /// </summary>
+        /// <param name="key">The key that is pressed</param>
+        /// <param name="replacement">The key that is sent instead</param>
         public void ReplaceKey(KeyCode key, KeyCode replacement) => KeyReplacementProcessor.Instance.Register(key, replacement);
 
+        /// <summary>
+        /// Returns true if the specified key is currently pressed.
+        /// </summary>
+        /// <param name="key">The key for which you want to determine its pressed state</param>
         public static bool IsKeyPressed(KeyCode key) => InputHook.IsKeyPressed(key);
+
+        /// <summary>
+        /// Returns true if the specified key is currently pressed.
+        /// </summary>
+        /// <param name="key">The key for which you want to determine its pressed state</param>
         public static bool IsKeyToggled(KeyCode key) => InputHook.IsKeyToggled(key);
     }
 }

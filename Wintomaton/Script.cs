@@ -15,6 +15,7 @@ namespace Wintomaton
         public WindowUtils Windows { get; }
         public ProcessUtils Processes { get; } = new ProcessUtils();
         public TrayUtils Tray { get; } = new TrayUtils();
+        public MessageUtils Messages { get; } = new MessageUtils();
 
         private bool isKeyboardHookEnabled;
         private bool isMouseHookEnabled;

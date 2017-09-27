@@ -8,7 +8,7 @@ namespace Wintomaton.Utils
 {
     public class WindowUtils
     {
-        private Script script;
+        private readonly Script script;
 
         public WindowUtils(Script script)
         {

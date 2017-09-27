@@ -4,6 +4,7 @@ using Hardcodet.Wpf.TaskbarNotification;
 using Wintomaton.Inputs;
 using Wintomaton.Utils;
 using Wintomaton.WinApis;
+using Wintomaton.Windows;
 
 namespace Wintomaton
 {
@@ -16,8 +17,8 @@ namespace Wintomaton
 
 //            Clipboard.Changed += () => Tray.Icon.ShowBalloonTip("Copied!", Clipboard.GetText(), BalloonIcon.Info);
 
-//            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelUp, KeyCode.LeftControl), Actions.Nothing);
-//            Mouse.AddHotMouse(new HotMouse(MouseEvent.WheelDown, KeyCode.LeftControl), Actions.Nothing);
+            Mouse.AddHotMouse(new MouseEvent(MouseEventType.WheelUp, KeyCode.LeftControl), Actions.Nothing);
+            Mouse.AddHotMouse(new MouseEvent(MouseEventType.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
             Keyboard.AddHotKey(KeyCode.V, ModifierKeys.Ctrl | ModifierKeys.Windows, () =>
             {
@@ -51,14 +52,18 @@ namespace Wintomaton
                 Windows.ActivateNextWindow(windows, activeWindow);
             });
 
-            Keyboard.AddHotKey(KeyCode.I, ModifierKeys.Ctrl | ModifierKeys.Shift, () =>
+            Keyboard.AddHotKey(KeyCode.W, ModifierKeys.Ctrl | ModifierKeys.Shift, () =>
             {
-//                var handle = WinApi.FindWindow(null, "Slack - Plangrid");
-//                MessageBox.Show($"Handle: {handle}");
                 var window = WinApi.GetForegroundWindow();
-                var className = Windows.GetWindowProcessImageName(window);
+                var processName = Windows.GetWindowProcessImageName(window);
                 var windowText = Windows.GetWindowText(window);
-                MessageBox.Show($"className:\r\n{className}\r\nwindowText:\r\n{windowText}");
+                Messages.Show(
+                    $"Process Name:\r\n{processName}\r\n\r\nWindow Text:\r\n{windowText}",
+                    "Window Information",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information,
+                    MessageBoxResult.OK,
+                    MessageBoxOptions.ServiceNotification);
             });
 
             Keyboard.AddShortcut(new Shortcut(KeyCode.Left, KeyCode.F24), new KeyStroke(KeyCode.Home));
@@ -93,6 +98,7 @@ namespace Wintomaton
             KeySequence.FromString("$arrowright").Substitute("➜");
             KeySequence.FromString("$boom").Substitute("💥");
             KeySequence.FromString("$bump").Substitute("⏫");
+            KeySequence.FromString("$db").Substitute("🏦");
 
 
 
