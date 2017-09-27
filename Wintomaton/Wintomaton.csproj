@@ -163,6 +163,7 @@
     <Compile Include="Utils\Actions.cs" />
     <Compile Include="Utils\ClipboardUtils.cs" />
     <Compile Include="Inputs\KeyboardUtils.cs" />
+    <Compile Include="Utils\MessageUtils.cs" />
     <Compile Include="Utils\MouseUtils.cs" />
     <Compile Include="Utils\ProcessUtils.cs" />
     <Compile Include="Utils\TextUtils.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="WinApis\WindowMessage.cs" />
     <Compile Include="Windows\IMessageReceiver.cs" />
     <Compile Include="Windows\KeyRecorder.cs" />
+    <Compile Include="Windows\MainWindow.cs" />
     <Compile Include="Windows\MessageReceiverWindow.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -66,6 +66,8 @@ namespace Wintomaton
                 ContextMenu = contextMenu
             };
 
+            Wintomaton.Windows.MainWindow.Initialize();
+
 //            notifyIcon.ShowBalloonTip("Title", "Content", BalloonIcon.Error);
 
 /*
