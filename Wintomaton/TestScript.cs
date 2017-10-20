@@ -20,7 +20,7 @@ namespace Wintomaton
             Mouse.AddHotMouse(new MouseEvent(MouseEventType.WheelUp, KeyCode.LeftControl), Actions.Nothing);
             Mouse.AddHotMouse(new MouseEvent(MouseEventType.WheelDown, KeyCode.LeftControl), Actions.Nothing);
 
-            Keyboard.AddHotKey(KeyCode.V, ModifierKeys.Ctrl | ModifierKeys.Windows, () =>
+            Keyboard.AddShortcut(new Shortcut(KeyCode.V, KeyCode.LeftControl, KeyCode.LeftWindows), _ =>
             {
                 var text = System.Windows.Clipboard.GetText();
                 text = Text.TrimIndent(text);
